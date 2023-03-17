@@ -2,6 +2,7 @@
 
 import pandas as pd
 import streamlit as st
+import numpy as np
 
 # Read in data from the Google Sheet.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
@@ -16,11 +17,15 @@ df = load_data(st.secrets["public_gsheets_url"])
 #for row in df.itertuples():
 #    st.write(f"{row.name} has a :{row.pet}:")
 #    st.write(f"{row}")
-import pandas as pd
-import numpy as np
+
 
 #chart_data = pd.DataFrame(
 #    np.random.randn(20, 3),
 #    columns=['a', 'b', 'c'])
 
-st.line_chart(df)
+#st.line_chart(df)
+chart_data = pd.DataFrame(
+    np.random.randn(20, 3),
+    columns=['a', 'b', 'c'])
+
+st.line_chart(chart_data)
