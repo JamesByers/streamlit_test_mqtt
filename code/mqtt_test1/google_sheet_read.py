@@ -25,6 +25,7 @@ print(df)
 st.write(df.shape[0])
 st.write(df.columns)
 st.write(df.shape[0])
+st.write(df)
 #time.sleep(5)
 #st.line_chart(chart_data)
 
