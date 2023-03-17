@@ -24,22 +24,12 @@ df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RD
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df = df[~(df['Datetime (Pacific Time)'] < '2023-03-15 12:51')]
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
-
+df.index = pd.DatetimeIndex['Datetime (Pacific Time)')
 df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
 
 st.title('Pi Pico W temperature')
 st.write('My garage temperature (F)')
 
-# CSS to inject contained in a string
-hide_dataframe_row_index = """
-            <style>
-            .row_heading.level0 {display:none}
-            .blank {display:none}
-            </style>
-            """
-
-# Inject CSS with Markdown
-st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
 
 st.write(df)
 st.line_chart(df, x='Datetime (Pacific Time)')
