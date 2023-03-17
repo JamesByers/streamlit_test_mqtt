@@ -12,13 +12,16 @@ def load_data(sheets_url):
     return pd.read_csv(csv_url)
 
 df = load_data(st.secrets["public_gsheets_url"])
+df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
+print(df.columns)
+
 #st.line_chart(chart_data)
 
 st.title('Pi Pico W temperature')
 st.write('My garage temperature F')
-dataframe = pd.DataFrame(np.random.randn(10, 20),
-  columns = ('col %d' % i
-    for i in range(20)))
+#dataframe = pd.DataFrame(np.random.randn(10, 20),
+#  columns = ('col %d' % i
+#    for i in range(20)))
 st.write(df)
 
 #chart_data = pd.DataFrame(
