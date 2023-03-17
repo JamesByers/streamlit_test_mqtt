@@ -14,8 +14,8 @@ def load_data(sheets_url):
 df = load_data(st.secrets["public_gsheets_url"])
 #st.line_chart(chart_data)
 
-st.title('Garage Temperature from a Pi Pico W')
-st.write('Temperature readings')
+st.title('Pi Pico W temperature')
+st.write('My garage temperature F')
 dataframe = pd.DataFrame(np.random.randn(10, 20),
   columns = ('col %d' % i
     for i in range(20)))
