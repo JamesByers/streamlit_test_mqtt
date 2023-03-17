@@ -33,7 +33,7 @@ st.title('Pi Pico W temperature')
 st.write('My garage temperature (F)')
 
 
-#st.write(df_date_index)
+st.write(df_date_index)
 st.line_chart(df, x='Datetime (Pacific Time)')
 
 #print(df.columns)
