@@ -27,7 +27,7 @@ df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],for
 #df.index = pd.DatetimeIndex(df['Datetime (Pacific Time)'])
 df_date_index = df
 df_date_index.set_index('Datetime (Pacific Time)', inplace=True) 
-dfdate_index = dfdate_index.sort_values(by='Datetime (Pacific Time)', ascending=False)
+df_date_index = dfdate_index.sort_values(by='Datetime (Pacific Time)', ascending=False)
 
 st.title('Pi Pico W temperature')
 st.write('My garage temperature (F)')
