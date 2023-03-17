@@ -16,7 +16,7 @@ df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],for
 
 st.title('Pi Pico W temperature')
 st.write('My garage temperature (F)')
-st.line_chart(df, x='Datetime (Pacific Time)', legend="")
+st.line_chart(df, x='Datetime (Pacific Time)')
 
 df_date_index = df
 df_date_index.set_index('Datetime (Pacific Time)', inplace=True) 
