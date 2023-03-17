@@ -22,7 +22,7 @@ df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RD
 #df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],infer_datetime_format=True).dt.time
 #df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'])
-df = df[~(df['Datetime (Pacific Time)'] < '2023-03-15')]
+df = df[~(df['Datetime (Pacific Time)'] < '2023-03-15 08:15')]
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
 
 df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
