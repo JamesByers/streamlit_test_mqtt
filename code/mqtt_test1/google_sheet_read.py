@@ -25,8 +25,8 @@ df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df = df[~(df['Datetime (Pacific Time)'] < '2023-03-15 12:51')]
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
 #df.index = pd.DatetimeIndex(df['Datetime (Pacific Time)'])
-df.set_index('Datetime (Pacific Time)', inplace=True) 
-df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
+df_date_index = df.set_index('Datetime (Pacific Time)') 
+dfdate_index = dfdate_index.sort_values(by='Datetime (Pacific Time)', ascending=False)
 
 st.title('Pi Pico W temperature')
 st.write('My garage temperature (F)')
