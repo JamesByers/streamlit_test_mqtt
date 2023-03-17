@@ -23,7 +23,7 @@ import altair as alt
 chart = (
         alt.Chart(
             data=df,
-            title="Your title",
+           # title="Your title",
         )
         .mark_line()
         .encode(
