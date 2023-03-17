@@ -17,6 +17,8 @@ import numpy as np
 df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RDa2y4l_-NlOLGg1qFUWL0jsQwVVwq-5KzAkNDdIBlye9W7h-iNkn7nX1HsTWqtAOUC/pub?gid=0&single=true&output=csv")
 df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
 print(df.columns)
+print(df)
+wait(5)
 
 #st.line_chart(chart_data)
 
