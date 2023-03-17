@@ -18,21 +18,6 @@ st.title('My garage temperature (F)')
 st.write('As measured by Pi Pico W using Micro Python')
 st.line_chart(df, x='Datetime (Pacific Time)')
 
-import altair as alt
-
-chart = (
-        alt.Chart(
-            data=df,
-           # title="Your title",
-        )
-        .mark_line()
-        .encode(
-            x=alt.X('Pi Pico Temperature (F)', axis=alt.Axis(title='Farenheit')),
-            x=alt.Y('Datetime (Pacific Time)', axis=alt.Axis(title='Pacific Time')),
-        )
-)
-
-st.altair_chart(chart)
 
 df_date_index = df
 df_date_index.set_index('Datetime (Pacific Time)', inplace=True) 
