@@ -8,15 +8,15 @@ import time
 # Read in data from the Google Sheet.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
 #@st.cache_data(ttl=60)
-st.runtime.legacy_caching.clear_cache()
+#st.runtime.legacy_caching.clear_cache()
 @st.cache_data(ttl=60)
 
 #def load_data(sheets_url):
     #csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
 #    csv_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RDa2y4l_-NlOLGg1qFUWL0jsQwVVwq-5KzAkNDdIBlye9W7h-iNkn7nX1HsTWqtAOUC/pub?gid=0&single=true&output=csv"
 #    return pd.read_csv(csv_url)
-
 #df = load_data(st.secrets["public_gsheets_url"])
+
 df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RDa2y4l_-NlOLGg1qFUWL0jsQwVVwq-5KzAkNDdIBlye9W7h-iNkn7nX1HsTWqtAOUC/pub?gid=0&single=true&output=csv")
 
 #df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],infer_datetime_format=True).dt.time
