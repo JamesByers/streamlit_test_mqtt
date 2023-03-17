@@ -33,7 +33,7 @@ st.line_chart(df, x='Datetime (Pacific Time)')
 df_date_index = df
 df_date_index.set_index('Datetime (Pacific Time)', inplace=True) 
 df_date_index = df_date_index.sort_values(by='Datetime (Pacific Time)', ascending=False)
-st.write(df_date_index)
+st.write(df_date_index.round(2))
 
 #print(df.columns)
 #print(df)
