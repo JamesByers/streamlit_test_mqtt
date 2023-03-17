@@ -3,6 +3,7 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
+import time
 
 # Read in data from the Google Sheet.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
@@ -18,7 +19,7 @@ df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RD
 df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
 print(df.columns)
 print(df)
-sleep(5)
+time.sleep(5)
 #st.line_chart(chart_data)
 
 st.title('Pi Pico W temperature')
