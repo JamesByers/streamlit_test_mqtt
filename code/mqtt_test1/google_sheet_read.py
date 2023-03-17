@@ -32,9 +32,8 @@ df_date_index = df_date_index.sort_values(by='Datetime (Pacific Time)', ascendin
 st.title('Pi Pico W temperature')
 st.write('My garage temperature (F)')
 
-
-st.write(df_date_index)
 st.line_chart(df, x='Datetime (Pacific Time)')
+st.write(df_date_index)
 
 #print(df.columns)
 #print(df)
