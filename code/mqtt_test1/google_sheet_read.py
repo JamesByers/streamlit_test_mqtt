@@ -9,7 +9,7 @@ import numpy as np
 #@st.cache_data(ttl=60)
 
 def load_data(sheets_url):
-    csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
+    #csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
     csv_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RDa2y4l_-NlOLGg1qFUWL0jsQwVVwq-5KzAkNDdIBlye9W7h-iNkn7nX1HsTWqtAOUC/pub?gid=0&single=true&output=csv"
     return pd.read_csv(csv_url)
 
