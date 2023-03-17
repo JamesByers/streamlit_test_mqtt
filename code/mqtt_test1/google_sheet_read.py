@@ -19,11 +19,11 @@ df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RD
 df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
 print(df.columns)
 print(df)
-time.sleep(5)
+#time.sleep(5)
 #st.line_chart(chart_data)
 
-st.title('Pi Pico W temperature')
-st.write('My garage temperature F')
+#st.title('Pi Pico W temperature')
+#st.write('My garage temperature F')
 #dataframe = pd.DataFrame(np.random.randn(10, 20),
 #  columns = ('col %d' % i
 #    for i in range(20)))
