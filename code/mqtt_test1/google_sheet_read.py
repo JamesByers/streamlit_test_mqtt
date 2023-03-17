@@ -22,7 +22,7 @@ df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
 print(df.shape[0])
 print(df.columns)
 print(df)
-st.write(
+st.write(df.shape[0])
 st.write(df.columns)
 st.write(df.shape[0])
 #time.sleep(5)
