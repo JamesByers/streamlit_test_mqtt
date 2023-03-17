@@ -32,6 +32,8 @@ st.write(df.shape[0])
 st.write(df.columns)
 st.write(df.shape[0])
 st.write(df)
+st.line_chart(df)
+
 #time.sleep(5)
 #st.line_chart(chart_data)
 
@@ -45,7 +47,7 @@ st.write(df)
 #chart_data = pd.DataFrame(
 #    np.random.randn(20, 3),
 #    columns=['a', 'b', 'c'])
-st.line_chart(df)
+st.line_chart(data=df)
 
 
 # Print results.
