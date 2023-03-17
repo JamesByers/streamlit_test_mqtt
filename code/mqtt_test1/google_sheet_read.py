@@ -12,17 +12,31 @@ def load_data(sheets_url):
     return pd.read_csv(csv_url)
 
 df = load_data(st.secrets["public_gsheets_url"])
+#st.line_chart(chart_data)
+
+st.title('This is my first app!')
+st.write('This is a table')
+dataframe = pd.DataFrame(np.random.randn(10, 20),
+  columns = ('col %d' % i
+    for i in range(20)))
+st.write(dataframe)
+
+chart_data = pd.DataFrame(
+#    np.random.randn(20, 3),
+#    columns=['a', 'b', 'c'])
+#st.line_chart(df)
+
 
 # Print results.
+
 #for row in df.itertuples():
 #    st.write(f"{row.name} has a :{row.pet}:")
 #    st.write(f"{row}")
 
 
 #st.line_chart(df)
-/* chart_data = pd.DataFrame(
-    np.random.randn(20, 3),
-    columns=['a', 'b', 'c'])
-
-st.line_chart(chart_data)
-*/
+# chart_data = pd.DataFrame(
+#    np.random.randn(20, 3),
+#    columns=['a', 'b', 'c'])
+#
+#st.line_chart(chart_data)
