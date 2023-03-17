@@ -19,7 +19,7 @@ df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RD
 df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
 print(df.columns)
 print(df)
-st.write(columns)
+st.write(df.columns)
 st.write(df)
 #time.sleep(5)
 #st.line_chart(chart_data)
