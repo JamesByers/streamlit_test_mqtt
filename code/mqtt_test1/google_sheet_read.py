@@ -12,7 +12,7 @@ def load_data(sheets_url):
     return pd.read_csv(csv_url)
 
 df = load_data(st.secrets["public_gsheets_url"])
-df = df.sort_values(by='Datetime (Pacific Time)', ascending=False)
+df = df.sort_values(by='Datetime (Pacific Time) custom formatted', ascending=False)
 print(df.columns)
 
 #st.line_chart(chart_data)
