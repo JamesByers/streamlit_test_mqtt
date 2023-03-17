@@ -27,7 +27,7 @@ st.write('My garage temperature F')
 #dataframe = pd.DataFrame(np.random.randn(10, 20),
 #  columns = ('col %d' % i
 #    for i in range(20)))
-st.write(df)
+#st.write(df)
 
 #chart_data = pd.DataFrame(
 #    np.random.randn(20, 3),
