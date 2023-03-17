@@ -14,8 +14,8 @@ df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df = df[~(df['Datetime (Pacific Time)'] < '2023-03-15 12:51')]
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
 
-st.title('Pi Pico W temperature')
-st.write('My garage temperature (F)')
+st.title('My garage temperature (F)')
+st.write('As measured by Pi Pico W using Micro Python')
 st.line_chart(df, x='Datetime (Pacific Time)')
 
 df_date_index = df
