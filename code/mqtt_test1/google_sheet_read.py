@@ -13,8 +13,7 @@ df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RD
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df = df[~(df['Datetime (Pacific Time)'] < '2023-03-15 12:51')]
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
-df['Temperature moving avg'] = df.rolling(window=5).mean() 
-df['Temperature moving avg']
+df['Temperature moving avg'] = df.rolling(window=6).mean() 
 
 st.title('My garage temperature (F)')
 st.write('As measured by a Pi Pico W running Micro Python')
