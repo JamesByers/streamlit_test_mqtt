@@ -2,8 +2,8 @@
 
 import pandas as pd
 import streamlit as st
-import numpy as np
-import time
+#import numpy as np
+#import time
 
 # Read in data from the Google Sheet.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
@@ -13,10 +13,13 @@ df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RD
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df = df[~(df['Datetime (Pacific Time)'] < '2023-03-15 12:51')]
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
+df['Temperature moving avg'] = df.rolling(window=5).mean() 
+df['Temperature moving avg']
 
 st.title('My garage temperature (F)')
 st.write('As measured by a Pi Pico W running Micro Python')
-st.line_chart(df, x='Datetime (Pacific Time)')
+df2 = df[['Datetime (Pacific Time)','Temperature moving avg']]  #.copy
+st.line_chart(df2,x='Datetime (Pacific Time)')
 
 
 df_date_index = df
