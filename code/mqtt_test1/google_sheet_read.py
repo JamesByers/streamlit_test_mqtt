@@ -28,9 +28,7 @@ df_day_min =  df.groupby(pd.Grouper(key='Datetime (Pacific Time)', axis=0,
 df_date_index = df
 df_date_index.set_index('Datetime (Pacific Time)', inplace=True) 
 df_date_index = df_date_index.sort_values(by='Datetime (Pacific Time)', ascending=False)
-# applying groupby
-
 
 st.write(df_date_index.round(2))
-st.write(df_day_min)
-df_day_max
+st.write(df_day_min.sort_index(ascending=False).round(2))
+st.write(df_day_max.sort_index(ascending=False).round(2))
