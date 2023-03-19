@@ -2,6 +2,7 @@
 
 import pandas as pd
 import streamlit as st
+import altair as alt
 #import numpy as np
 #import time
 
@@ -19,11 +20,26 @@ st.title('My garage temperature (F)')
 st.write('As measured by a Pi Pico W running Micro Python')
 df2 = df[['Datetime (Pacific Time)','Temperature moving avg']]  #.copy
 st.line_chart(df2,x='Datetime (Pacific Time)')
+
 df_day_max =  df.groupby(pd.Grouper(key='Datetime (Pacific Time)', axis=0, 
                       freq='1D', sort=True)).max().rename(columns={'Pi Pico Temperature (F)':'Max temperature'}).drop('Temperature moving avg', axis=1)
 
 df_day_min =  df.groupby(pd.Grouper(key='Datetime (Pacific Time)', axis=0, 
                       freq='1D', sort=True)).min().rename(columns={'Pi Pico Temperature (F)':'Min temperature'}).drop('Temperature moving avg', axis=1)
+df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
+df_day.index = df_day.index.strftime('%m/%d/%Y')
+st.line_chart(df_day)
+#chart = alt.Chart(df_day.encode(
+#    x=alt.X(title="Date"),
+#    y=alt.Y(title="Temperature (F)")
+#)
+
+#st.altair_chart(chart)
+#, use_container_width=True)
+#st.write(chart)
+
+
+
 
 df_date_index = df
 df_date_index.set_index('Datetime (Pacific Time)', inplace=True) 
@@ -32,8 +48,7 @@ df_date_index.index = df_date_index.index.strftime('%m/%d/%Y  %I:%M %p')
 
 #st.write(df_day_min.sort_index(ascending=False).round(2))
 #st.write(df_day_max.sort_index(ascending=False).round(2))
-df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
-df_day.index = df_day.index.strftime('%m/%d/%Y')
+
 st.write(df_day)
 
 st.write(df_date_index.round(2))
