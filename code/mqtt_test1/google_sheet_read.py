@@ -32,8 +32,8 @@ st.line_chart(df_day)
 
 df_day_index = df_day.reset_index()
 df_day_index['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'], format="$D/%M/%Y")
-st.write(df_day_index)
-df_day_index.dtypes
+#st.write(df_day_index)
+#df_day_index.dtypes
 
 #chart = alt.Chart(df_day_index).mark_line().encode(
 #    x='Datetime (Pacific Time)',
@@ -64,7 +64,7 @@ chart = alt.layer(
  #   color='key:N'
 #)
 
-st.altair_chart(chart)
+#st.altair_chart(chart)
 
 
 
