@@ -53,8 +53,8 @@ df_day_index.dtypes
 base = alt.Chart(df_day_index).encode(x='Datetime (Pacific Time)')
 
 chart = alt.layer(
-    base.mark_line(color='red').encode(y='Min temperature'),
-    base.mark_line(color='blue').encode(y='Max temperature')
+    base.mark_line(color='blue').encode(y='Min temperature'),
+    base.mark_line(color='red').encode(y='Max temperature')
     )
 #chart = alt.Chart(df_day_index).transform_fold(
  #   ['Max temperature', 'Min temperature'], as_=['Temperature (F)']
