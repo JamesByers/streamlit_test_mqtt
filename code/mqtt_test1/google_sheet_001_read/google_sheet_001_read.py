@@ -30,10 +30,10 @@ df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
 df_day.index = df_day.index.strftime('%m/%d/%Y')
 st.line_chart(df_day)
 
-df_day_index = df_day.reset_index().sort()
+df_day_index = df_day.reset_index().index()
 df_day_index['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'], format="$D/%M/%Y")
-st.write(df_day_index)
-df_day_index.dtypes
+#st.write(df_day_index)
+#df_day_index.dtypes
 
 #chart = alt.Chart(df_day_index).mark_line().encode(
 #    x='Datetime (Pacific Time)',
