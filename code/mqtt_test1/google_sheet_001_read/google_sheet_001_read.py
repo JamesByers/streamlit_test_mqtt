@@ -23,16 +23,46 @@ st.line_chart(df2,x='Datetime (Pacific Time)')
 
 df_day_max =  df.groupby(pd.Grouper(key='Datetime (Pacific Time)', axis=0, 
                       freq='1D', sort=True)).max().rename(columns={'Pi Pico Temperature (F)':'Max temperature'}).drop('Temperature moving avg', axis=1)
-
 df_day_min =  df.groupby(pd.Grouper(key='Datetime (Pacific Time)', axis=0, 
                       freq='1D', sort=True)).min().rename(columns={'Pi Pico Temperature (F)':'Min temperature'}).drop('Temperature moving avg', axis=1)
 df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
 df_day.index = df_day.index.strftime('%m/%d/%Y')
 st.line_chart(df_day)
 
+
 df_day_index = df_day.reset_index()
-df_day_index['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'], format="$D/%M/%Y")
+#df_day_index['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'], format="$D/%M/%Y")
+
 st.write(df_day_index)
+#df_date_index = df
+#df_date_index.set_index('Datetime (Pacific Time)', inplace=True) 
+#df_date_index = df_date_index.sort_values(by='Datetime (Pacific Time)', ascending=False)
+#df_date_index.index = df_date_index.index.strftime('%m/%d/%Y  %I:%M %p')
+
+base = (alt.Chart(df_day_index).encode(
+    x='Datetime (Pacific Time)',
+    )   
+)
+chart = alt.layer(
+    base.mark_line(color='blue').encode(y='Min temperature'),
+    base.mark_line(color='red').encode(y='Max temperature'),
+    )#.configure(autosize="fit-x")
+#.properties(
+##        width='container',
+#    )
+
+
+st.altair_chart(chart, use_container_width=True)
+
+#st.write(df_date_index)
+#st.write(df_day_min.sort_index(ascending=False).round(2))
+#st.write(df_day_max.sort_index(ascending=False).round(2))
+
+st.write(df_day)
+
+st.write(df_day_index.round(2))
+
+#st.write(df_day_index)
 #df_day_index.dtypes
 
 #chart = alt.Chart(df_day_index).mark_line().encode(
@@ -50,12 +80,7 @@ st.write(df_day_index)
     
 #st.altair_chart(chart)
 #, use_container_width=True)
-base = alt.Chart(df_day_index).encode(x='Datetime (Pacific Time)')
 
-chart = alt.layer(
-    base.mark_line(color='blue').encode(y='Min temperature'),
-    base.mark_line(color='red').encode(y='Max temperature'),
-    )
 #chart = alt.Chart(df_day_index).transform_fold(
  #   ['Max temperature', 'Min temperature'], as_=['Temperature (F)']
 #).mark_line().encode(
@@ -64,19 +89,7 @@ chart = alt.layer(
  #   color='key:N'
 #)
 
-st.altair_chart(chart)
 
 
 
 
-df_date_index = df
-df_date_index.set_index('Datetime (Pacific Time)', inplace=True) 
-df_date_index = df_date_index.sort_values(by='Datetime (Pacific Time)', ascending=False)
-df_date_index.index = df_date_index.index.strftime('%m/%d/%Y  %I:%M %p')
-
-#st.write(df_day_min.sort_index(ascending=False).round(2))
-#st.write(df_day_max.sort_index(ascending=False).round(2))
-
-st.write(df_day)
-
-st.write(df_date_index.round(2))
