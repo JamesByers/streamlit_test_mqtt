@@ -39,12 +39,13 @@ st.write(df_day_index)
 #df_date_index = df_date_index.sort_values(by='Datetime (Pacific Time)', ascending=False)
 #df_date_index.index = df_date_index.index.strftime('%m/%d/%Y  %I:%M %p')
 
-base = (alt.Chart(df_day_index).encode(
-    x='Datetime (Pacific Time)',
+base = (alt.Chart(df_day_index, title="Temperatures by Date").encode(
+    x=alt.X('Datetime (Pacific Time)',title ="Date"), 
+    #axis=alt.Axis(title=['Text on the first line', 'and text on the second line'])
     )   
 )
 chart = alt.layer(
-    base.mark_line(color='blue').encode(y='Min temperature'),
+    base.mark_line(color='blue').encode(alt.Y('Min temperature',title="Temperature F")),
     base.mark_line(color='red').encode(y='Max temperature'),
     )#.configure(autosize="fit-x")
 #.properties(
