@@ -12,7 +12,7 @@ import altair as alt
 
 df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vScVe-xEahJ_RDa2y4l_-NlOLGg1qFUWL0jsQwVVwq-5KzAkNDdIBlye9W7h-iNkn7nX1HsTWqtAOUC/pub?gid=0&single=true&output=csv")
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'])
-df = df[~(df['Datetime (Pacific Time)'] < '2023-03-15 12:51')]
+df = df[~(df['Datetime (Pacific Time)'] < '2023-03-16 00:00')]
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
 df['Temperature moving avg'] = df.rolling(window=6).mean() 
 
