@@ -47,10 +47,10 @@ st.write(df_day.round(2))
 
 df_date_index = df
 df_date_index = df_date_index.set_index('Datetime (Pacific Time)')
-df_date_index.index = df_date_index.index.strftime('%m/%d/%Y  %I:%M %p')
-df_date_index.index.rename('Date', inplace= True)
-df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": "     Temp F", "Temperature moving avg": "Moving avg"})
 df_date_index = df_date_index.sort_index(ascending=False)
+df_date_index.index = df_date_index.index.strftime('%m/%d/%Y  %I:%M %p')
+df_date_index.index.rename('Timestamp', inplace= True)
+df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": "     Temp F", "Temperature moving avg": "Moving avg"})
 
 
 st.write(df_date_index.round(2))
