@@ -29,9 +29,8 @@ df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
 df_day.index = df_day.index.strftime('%m/%d/%Y')
 df_day.index.names = ['Date']
 df_day_index = df_day.reset_index()
-st.write(df_day_index)
 
-chart2 = alt.Chart(df_day_index, title="Temperature by date (F)").mark_line().transform_fold(
+chart2 = alt.Chart(df_day_index).mark_line().transform_fold(
     fold=['Max temp','Min temp'], 
     as_=['variable', 'value']
 ).encode(
