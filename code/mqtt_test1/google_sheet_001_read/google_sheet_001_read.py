@@ -30,11 +30,11 @@ df_day.index = df_day.index.strftime('%m/%d/%Y')
 df_day.index.names = ['Date']
 df_day_index = df_day.reset_index()
 
-chart2 = alt.Chart(df_day_index).mark_line().transform_fold(
+chart2 = alt.Chart(df_day_index, title= "Temperatures by day").mark_line().transform_fold(
     fold=['Max temp','Min temp'], 
     as_=['variable', 'value']
 ).encode(
-    x=alt.X('Date:T', axis=alt.Axis(format="%m/%d/%y", tickCount="day"), title = 'Date'),
+    x=alt.X('Date:T', axis=alt.Axis(format="%m/%d/%y", tickCount="day", title=None)),
     y=alt.Y('value:Q', title= "Degrees F"),
     color =alt.Color('variable:N', legend=alt.Legend(
         orient='bottom-right', title=None)
