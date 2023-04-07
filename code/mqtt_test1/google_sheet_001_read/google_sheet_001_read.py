@@ -17,7 +17,7 @@ df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],for
 df['Moving avg (6)'] = df.rolling(window=6).mean() 
 
 st.title('Backyard temperature (F)')
-st.write('Measured every 30 min by a Pi Pico W and Micro Python')
+st.write('Measured by a Pi Pico W with Micro Python')
 df2 = df[['Datetime (Pacific Time)','Moving avg (6)']]
 st.line_chart(df2,x='Datetime (Pacific Time)')
 
@@ -30,7 +30,7 @@ df_day.index = df_day.index.strftime('%m/%d/%Y')
 df_day.index.names = ['Date']
 df_day_index = df_day.reset_index()
 
-chart2 = alt.Chart(df_day_index, title= "Temperatures by day").mark_line().transform_fold(
+chart2 = alt.Chart(df_day_index, title= "Max/Min by day").mark_line().transform_fold(
     fold=['Max temp','Min temp'], 
     as_=['variable', 'value']
 ).encode(
