@@ -16,8 +16,8 @@ df = df[~(df['Datetime (Pacific Time)'] < '2023-03-20 00:00')]
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
 df['Temperature moving avg'] = df.rolling(window=6).mean() 
 
-st.title('My backyard temperature (F)')
-st.write('As measured by a Pi Pico W running Micro Python')
+st.title('Backyard temperature (F)')
+st.write('Measured every 30 min by a Pi Pico W microprocessor and Micro Python')
 df2 = df[['Datetime (Pacific Time)','Temperature moving avg']]
 st.line_chart(df2,x='Datetime (Pacific Time)')
 
