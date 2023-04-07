@@ -18,7 +18,7 @@ df['Moving avg (6)'] = df.rolling(window=6).mean()
 
 st.title('Backyard temperature (F)')
 st.write('Measured every 30 min by a Pi Pico W and Micro Python')
-df2 = df[['Datetime (Pacific Time)','Temperature moving avg']]
+df2 = df[['Datetime (Pacific Time)','Moving avg (6)']]
 st.line_chart(df2,x='Datetime (Pacific Time)')
 
 df_day_max =  df.groupby(pd.Grouper(key='Datetime (Pacific Time)', axis=0, 
@@ -50,7 +50,7 @@ df_date_index = df_date_index.set_index('Datetime (Pacific Time)')
 df_date_index = df_date_index.sort_index(ascending=False)
 df_date_index.index = df_date_index.index.strftime('%m/%d/%Y  %I:%M %p')
 df_date_index.index.rename('Timestamp', inplace= True)
-df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": "     Temp F", "Temperature moving avg": "Moving avg"})
+df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": "     Temp F", "Moving avg (6)": "Moving avg"})
 
 
 st.write(df_date_index.round(2))
