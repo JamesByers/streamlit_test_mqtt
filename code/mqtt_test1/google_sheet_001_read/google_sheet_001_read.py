@@ -14,17 +14,17 @@ df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT7WzKwr6VIXA4
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df = df[~(df['Datetime (Pacific Time)'] < '2023-03-20 00:00')]
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
-df['Temperature moving avg'] = df.rolling(window=6).mean() 
+df['Moving avg (6)'] = df.rolling(window=6).mean() 
 
 st.title('Backyard temperature (F)')
-st.write('Measured every 30 min by a Pi Pico W microprocessor and Micro Python')
+st.write('Measured every 30 min by a Pi Pico W and Micro Python')
 df2 = df[['Datetime (Pacific Time)','Temperature moving avg']]
 st.line_chart(df2,x='Datetime (Pacific Time)')
 
 df_day_max =  df.groupby(pd.Grouper(key='Datetime (Pacific Time)', axis=0, 
-                      freq='1D', sort=True)).max().rename(columns={'Pi Pico Temperature (F)':'Max temp'}).drop('Temperature moving avg', axis=1)
+                      freq='1D', sort=True)).max().rename(columns={'Pi Pico Temperature (F)':'Max temp'}).drop('Moving avg (6)', axis=1)
 df_day_min =  df.groupby(pd.Grouper(key='Datetime (Pacific Time)', axis=0, 
-                      freq='1D', sort=True)).min().rename(columns={'Pi Pico Temperature (F)':'Min temp'}).drop('Temperature moving avg', axis=1)
+                      freq='1D', sort=True)).min().rename(columns={'Pi Pico Temperature (F)':'Min temp'}).drop('Moving avg (6)', axis=1)
 df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
 df_day.index = df_day.index.strftime('%m/%d/%Y')
 df_day.index.names = ['Date']
