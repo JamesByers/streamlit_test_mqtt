@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 #import numpy as np
+
 #import time
 # Read in data from the Google Sheet
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
@@ -17,7 +18,7 @@ df['Temperature moving avg'] = df.rolling(window=6).mean()
 
 st.title('My garage temperature (F)')
 st.write('As measured every 30 minutes by a Pi Pico W running Micro Python')
-st.write('Data Flow: Sensor -> Pi Pico MQTT sublish > HiveMQ.cloud Subscribe > Rasberry Pi Node Red > Google Sheets > Streamlit Python visualization')
+
 df2 = df[['Datetime (Pacific Time)','Temperature moving avg']]
 st.line_chart(df2,x='Datetime (Pacific Time)')
 
