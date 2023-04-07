@@ -5,7 +5,6 @@ import streamlit as st
 import altair as alt
 #import numpy as np
 #import time
-
 # Read in data from the Google Sheet
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
 #@st.cache_data(ttl=600)
