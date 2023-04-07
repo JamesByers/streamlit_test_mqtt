@@ -55,7 +55,7 @@ df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": "     T
 
 st.write(df_date_index.round(2))
 st.write('**Data Flow**')
-st.write('Sensor > Pi Pico MQTT publish > HiveMQ.cloud MQTT > Rasberry Pi Node Red > Google Sheets > Streamlit Python visualization')
+st.write('Sensor > Pi Pico MQTT publish > HiveMQ.cloud MQTT > Rasberry Pi Node Red > Google Sheets > Streamlit.io Python visualization')
 
 #st.write(df_date_index)
 #st.write(df_day_min.sort_index(ascending=False).round(2))
