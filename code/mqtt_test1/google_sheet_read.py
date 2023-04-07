@@ -6,7 +6,7 @@ import altair as alt
 #import numpy as np
 #import time
 
-# Read in data from the Google Sheet.
+# Read in data from the Google Sheet
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
 #@st.cache_data(ttl=600)
 
@@ -17,7 +17,8 @@ df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],for
 df['Temperature moving avg'] = df.rolling(window=6).mean() 
 
 st.title('My garage temperature (F)')
-st.write('As measured by a Pi Pico W running Micro Python')
+st.write('As measured every 30 minutes by a Pi Pico W running Micro Python')
+st.write('Data Flow: Sensor -> Pi Pico MQTT sublish > HiveMQ.cloud Subscribe > Rasberry Pi Node Red > Google Sheets > Streamlit Python visualization')
 df2 = df[['Datetime (Pacific Time)','Temperature moving avg']]
 st.line_chart(df2,x='Datetime (Pacific Time)')
 
@@ -33,41 +34,12 @@ st.line_chart(df_day)
 df_day_index = df_day.reset_index()
 df_day_index['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'], format="$D/%M/%Y")
 #st.write(df_day_index)
-#df_day_index.dtypes
 
-#chart = alt.Chart(df_day_index).mark_line().encode(
-#    x='Datetime (Pacific Time)',
-#    y='Max temperature',
-#    #color='symbol:N',
-#)
-#chart = alt.Chart(df_day_index).mark_line().encode(
-#    x=alt.X(title="Date"),
-#    y=alt.Y(title="Temperature (F)"),
-#    mark = 'line',   
-#    line1 = alt.Chart(df_day_index.reset_index()).encode(x='Datetime (Pacific Time)', y="Max temperature"),
-#    )  
-
-    
-#st.altair_chart(chart)
-#, use_container_width=True)
 base = alt.Chart(df_day_index).encode(x='Datetime (Pacific Time)')
-
 chart = alt.layer(
     base.mark_line(color='red').encode(y='Min temperature'),
     base.mark_line(color='blue').encode(y='Max temperature')
     )
-#chart = alt.Chart(df_day_index).transform_fold(
- #   ['Max temperature', 'Min temperature'], as_=['Temperature (F)']
-#).mark_line().encode(
-#    x='Datetime (Pacific Time):T',
-#    y='Temperature (F):Q',
- #   color='key:N'
-#)
-
-#st.altair_chart(chart)
-
-
-
 
 df_date_index = df
 df_date_index.set_index('Datetime (Pacific Time)', inplace=True) 
