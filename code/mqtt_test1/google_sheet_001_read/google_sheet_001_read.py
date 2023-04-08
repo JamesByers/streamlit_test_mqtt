@@ -54,7 +54,7 @@ st.write(df_date_index.round(2))
 
 st.write('**Data Flow**')
 st.write('Sensor > Pi Pico MQTT publish > HiveMQ.cloud MQTT > Rasberry Pi Node Red > Google Sheets > Streamlit.io Python visualization')
-link="See [this repo ](https://github.com/JamesByers/streamlit_test_mqtt/blob/main/code/mqtt_test1/google_sheet_001_read/google_sheet_001_read.py) for this code"
+link="App code [repo](https://github.com/JamesByers/streamlit_test_mqtt/blob/main/code/mqtt_test1/google_sheet_001_read/google_sheet_001_read.py)"
 st.markdown(link,unsafe_allow_html=True)
 
 
