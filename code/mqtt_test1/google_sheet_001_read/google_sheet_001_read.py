@@ -41,6 +41,7 @@ chart2 = alt.Chart(df_day_index, title= "Max/Min by day").mark_line().transform_
     ),
 )
 st.altair_chart(chart2, use_container_width=True)
+
 st.write(df_day.round(2))
 
 df_date_index = df
@@ -49,14 +50,11 @@ df_date_index = df_date_index.sort_index(ascending=False)
 df_date_index.index = df_date_index.index.strftime('%m/%d/%Y  %I:%M %p')
 df_date_index.index.rename('Timestamp', inplace= True)
 df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": "     Temp F", "Moving avg (6)": "Moving avg"})
-
-
 st.write(df_date_index.round(2))
+
 st.write('**Data Flow**')
 st.write('Sensor > Pi Pico MQTT publish > HiveMQ.cloud MQTT > Rasberry Pi Node Red > Google Sheets > Streamlit.io Python visualization')
-st.write("See [this repo ](https://github.com/JamesByers/streamlit_test_mqtt/blob/main/code/mqtt_test1/google_sheet_001_read/google_sheet_001_read.py)")
-link="See [this repo ](https://github.com/JamesByers/streamlit_test_mqtt/blob/main/code/mqtt_test1/google_sheet_001_read/google_sheet_001_read.py) for code"
-
+link="See [this repo ](https://github.com/JamesByers/streamlit_test_mqtt/blob/main/code/mqtt_test1/google_sheet_001_read/google_sheet_001_read.py) for this code"
 st.markdown(link,unsafe_allow_html=True)
 
 
