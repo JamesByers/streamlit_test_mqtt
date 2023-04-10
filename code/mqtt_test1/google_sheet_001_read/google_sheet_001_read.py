@@ -17,9 +17,21 @@ df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],for
 df['Moving avg (6)'] = df.rolling(window=6).mean() 
 
 st.title('Backyard temperature (F)')
-st.write('Measured by a Pi Pico W with MicroPython')
+st.write('Measured by a Pi Pico W & MicroPython. Updated every 30 min')
+st.write('')
 df2 = df[['Datetime (Pacific Time)','Moving avg (6)']]
-st.line_chart(df2,x='Datetime (Pacific Time)')
+#st.line_chart(df2,x='Datetime (Pacific Time)')
+
+chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
+    x=alt.X('Datetime (Pacific Time):T', axis=alt.Axis(format="%m/%d/%y", tickCount="day", title=None)),
+    y=alt.Y('Moving avg (6):Q', title= "Degrees F"),
+    tooltip=[
+        alt.Tooltip('Datetime (Pacific Time)', format="%Y-%m-%d %H:%M", title="Datetime"),
+        alt.Tooltip('Moving avg (6)', format="5.2", title="Temp (F)"),
+    ]
+)
+st.altair_chart(chart1, use_container_width=True)
+
 
 df_day_max =  df.groupby(pd.Grouper(key='Datetime (Pacific Time)', axis=0, 
                       freq='1D', sort=True)).max().rename(columns={'Pi Pico Temperature (F)':'Max temp'}).drop('Moving avg (6)', axis=1)
