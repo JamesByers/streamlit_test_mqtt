@@ -27,7 +27,7 @@ chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
     y=alt.Y('Moving avg (6):Q', title= "Degrees F"),
     tooltip=[
         alt.Tooltip('Datetime (Pacific Time)', format="%m/%d/%y", title="Date"),
-        alt.Tooltip('Datetime (Pacific Time)', format="%H:%M", title="Time"),
+        alt.Tooltip('Datetime (Pacific Time)', format="%H:%M %p", title="Time"),
         alt.Tooltip('Moving avg (6)', format=".1f", title="Temp (F)"),
     ]
 )
