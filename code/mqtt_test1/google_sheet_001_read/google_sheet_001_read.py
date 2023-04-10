@@ -13,7 +13,7 @@ import altair as alt
 df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT7WzKwr6VIXA4iGEQDBluX677Ed1UlYtOXUI4I7MwiySxa0Ja_o4Mh05nLp7MAdh8ZmyyARSexSm5x/pub?gid=0&single=true&output=csv")
 df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df = df[~(df['Datetime (Pacific Time)'] < '2023-03-20 00:00')]
-df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%d/%m/%Y %H:%M')
+df['Datetime (Pacific Time)'] = pd.to_datetime(df['Datetime (Pacific Time)'],format='%-d/%-m/%y %H:%M')
 df['Moving avg (6)'] = df.rolling(window=6).mean() 
 
 st.title('Backyard temperature (F)')
@@ -23,11 +23,11 @@ df2 = df[['Datetime (Pacific Time)','Moving avg (6)']]
 #st.line_chart(df2,x='Datetime (Pacific Time)')
 
 chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
-    x=alt.X('Datetime (Pacific Time):T', axis=alt.Axis(format="%m/%d/%y", tickCount="day", title=None)),
+    x=alt.X('Datetime (Pacific Time):T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
     y=alt.Y('Moving avg (6):Q', title= "Degrees F"),
     tooltip=[
-        alt.Tooltip('Datetime (Pacific Time)', format="%m/%d/%y", title="Date"),
-        alt.Tooltip('Datetime (Pacific Time)', format="%H:%M %p", title="Time"),
+        alt.Tooltip('Datetime (Pacific Time)', format="%-m/%-d/%y", title="Date"),
+        alt.Tooltip('Datetime (Pacific Time)', format="%-H:%M %p", title="Time"),
         alt.Tooltip('Moving avg (6)', format=".1f", title="Temp (F)"),
     ]
 )
@@ -47,7 +47,7 @@ chart2 = alt.Chart(df_day_index, title= "Max/Min by day").mark_line().transform_
     fold=['Max temp','Min temp'], 
     as_=['variable', 'value']
 ).encode(
-    x=alt.X('Date:T', axis=alt.Axis(format="%m/%d/%y", tickCount="day", title=None)),
+    x=alt.X('Date:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
     y=alt.Y('value:Q', title= "Degrees F"),
     color =alt.Color('variable:N', legend=alt.Legend(
         orient='bottom-right', title=None)),
