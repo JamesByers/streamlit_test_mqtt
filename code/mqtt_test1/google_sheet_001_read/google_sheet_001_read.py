@@ -26,8 +26,9 @@ chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
     x=alt.X('Datetime (Pacific Time):T', axis=alt.Axis(format="%m/%d/%y", tickCount="day", title=None)),
     y=alt.Y('Moving avg (6):Q', title= "Degrees F"),
     tooltip=[
-        alt.Tooltip('Datetime (Pacific Time)', format="%Y-%m-%d %H:%M", title="Datetime"),
-        alt.Tooltip('Moving avg (6)', format="5.2", title="Temp (F)"),
+        alt.Tooltip('Datetime (Pacific Time)', format="%m/%d/%y", title="Date"),
+        alt.Tooltip('Datetime (Pacific Time)', format="%H:%M", title="Time"),
+        alt.Tooltip('Moving avg (6)', format=".1f", title="Temp (F)"),
     ]
 )
 st.altair_chart(chart1, use_container_width=True)
@@ -49,8 +50,14 @@ chart2 = alt.Chart(df_day_index, title= "Max/Min by day").mark_line().transform_
     x=alt.X('Date:T', axis=alt.Axis(format="%m/%d/%y", tickCount="day", title=None)),
     y=alt.Y('value:Q', title= "Degrees F"),
     color =alt.Color('variable:N', legend=alt.Legend(
-        orient='bottom-right', title=None)
-    ),
+        orient='bottom-right', title=None)),
+    tooltip=[
+        #alt.Tooltip('Date', format='%m/%d/%y', title='Date'),
+        alt.Tooltip('Date:T', format='%m/%d/%y'),
+        alt.Tooltip('Max temp', format='.1f', title='Max Temp (F)'),
+        alt.Tooltip('Min temp', format='.1f', title='Min Temp (F)'),
+    ]    
+#    ),
 )
 st.altair_chart(chart2, use_container_width=True)
 
