@@ -49,7 +49,6 @@ chart2 = alt.Chart(df_day_index, title= "Max/Min by day").mark_line().transform_
     color =alt.Color('variable:N', legend=alt.Legend(
         orient='bottom-right', title=None)),
     tooltip=[
-        #alt.Tooltip('Date', format='%m/%d/%y', title='Date'),
         alt.Tooltip('Date:T', format='%m/%d/%y'),
         alt.Tooltip('Max temp', format='.1f', title='Max Temp (F)'),
         alt.Tooltip('Min temp', format='.1f', title='Min Temp (F)'),
