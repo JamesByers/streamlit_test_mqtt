@@ -34,7 +34,7 @@ st.altair_chart(chart1, use_container_width=True)
 df_day_max =  df.groupby(pd.Grouper(key='Datetime PT', axis=0, 
                       freq='1D', sort=True)).max().rename(columns={'Pi Pico Temperature (F)':'Max temp'}).drop('Moving avg (3)', axis=1)
 df_day_min =  df.groupby(pd.Grouper(key='Datetime PT', axis=0, 
-                      freq='1D', sort=True)).min().rename(columns={'Pi Pico Temperature (F)':'Min temp'}).drop('Moving avg (6)', axis=1)
+                      freq='1D', sort=True)).min().rename(columns={'Pi Pico Temperature (F)':'Min temp'}).drop('Moving avg (3)', axis=1)
 df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
 df_day.index.rename('Date', inplace= True)
 
