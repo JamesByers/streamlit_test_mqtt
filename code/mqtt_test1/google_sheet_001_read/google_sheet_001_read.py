@@ -18,21 +18,21 @@ df['Datetime PT'] = pd.to_datetime(df['Datetime PT'],format='%-d/%-m/%-y %H:%M')
 df['Moving avg (3)'] = df.rolling(window=3).mean() 
 
 # Publish chart of temperature over time
-df2 = df[['Datetime PT','Moving avg (6)']]
+df2 = df[['Datetime PT','Moving avg (3)']]
 chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
-    y=alt.Y('Moving avg (6):Q', title= "Degrees F"),
+    y=alt.Y('Moving avg (3):Q', title= "Degrees F"),
     tooltip=[
         alt.Tooltip('Datetime PT', format="%-m/%-d/%y", title="Date"),
         alt.Tooltip('Datetime PT', format="%-H:%M %p", title="Time"),
-        alt.Tooltip('Moving avg (6)', format=".1f", title="Temp (F)"),
+        alt.Tooltip('Moving avg (3)', format=".1f", title="Temp (F)"),
     ]
 )
 st.altair_chart(chart1, use_container_width=True)
 
 # Create Max/Min by day dataframe
 df_day_max =  df.groupby(pd.Grouper(key='Datetime PT', axis=0, 
-                      freq='1D', sort=True)).max().rename(columns={'Pi Pico Temperature (F)':'Max temp'}).drop('Moving avg (6)', axis=1)
+                      freq='1D', sort=True)).max().rename(columns={'Pi Pico Temperature (F)':'Max temp'}).drop('Moving avg (3)', axis=1)
 df_day_min =  df.groupby(pd.Grouper(key='Datetime PT', axis=0, 
                       freq='1D', sort=True)).min().rename(columns={'Pi Pico Temperature (F)':'Min temp'}).drop('Moving avg (6)', axis=1)
 df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
