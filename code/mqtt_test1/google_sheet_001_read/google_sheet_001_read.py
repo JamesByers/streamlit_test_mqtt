@@ -15,7 +15,7 @@ df['Datetime PT'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df.drop('Datetime (Pacific Time)', axis=1, inplace=True)
 df = df[~(df['Datetime PT'] < '2023-03-20 00:00')]
 df['Datetime PT'] = pd.to_datetime(df['Datetime PT'],format='%-d/%-m/%-y %H:%M')
-df['Moving avg (6)'] = df.rolling(window=6).mean() 
+df['Moving avg (3)'] = df.rolling(window=3).mean() 
 
 # Publish chart of temperature over time
 df2 = df[['Datetime PT','Moving avg (6)']]
