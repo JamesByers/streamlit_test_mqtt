@@ -70,7 +70,7 @@ df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": '     T
 st.write(df_date_index.round(2))
 
 st.write('**Data Flow**')
-st.write('Sensor > Pi Pico > MQTT > HiveMQ.cloud > MQTT > Rasberry Pi Node Red > Google API > Google Sheets > Streamlit.io Python visualization')
+st.write('Sensor > Pi Pico > MQTT > HiveMQ.cloud > MQTT > Rasberry Pi with Node Red > Google API > Google Sheets > Streamlit.io Python visualization')
 link="**Code [repo](https://github.com/JamesByers/streamlit_test_mqtt/blob/main/code/mqtt_test1/google_sheet_001_read/google_sheet_001_read.py)**"
 st.markdown(link,unsafe_allow_html=True)
 
