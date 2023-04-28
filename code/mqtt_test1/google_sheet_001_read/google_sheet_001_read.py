@@ -15,7 +15,6 @@ df['Datetime PT'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df.drop('Datetime (Pacific Time)', axis=1, inplace=True)
 df = df[~(df['Datetime PT'] < '2023-03-20 00:00')]
 df['Datetime PT'] = pd.to_datetime(df['Datetime PT'],format='%-d/%-m/%-y %H:%M')
-st.write(df)
 df['Moving avg (3)'] = df["Pi Pico Temperature (F)"].rolling(3).mean() 
 
 # Publish chart of temperature over time
