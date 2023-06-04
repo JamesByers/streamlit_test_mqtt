@@ -6,7 +6,8 @@ import streamlit as st
 import altair as alt
 
 st.title('Backyard temperature (F)')
-st.write('Measured by a Pi Pico W, a BME280 and  MicroPython. Updated every 30 min')
+st.write('Measured by a Pi Pico W, a BME280 sensor and MicroPython')
+st.write('Updated every 30 min')
 st.write('')
 
 # Read in and prep raw data
