@@ -26,9 +26,9 @@ chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
     y=alt.Y('Moving avg (3):Q', title= "Degrees F"),
     tooltip=[
-        alt.Tooltip('Datetime PT', format="%-m/%-d/%y", title="Date"),
-        alt.Tooltip('Datetime PT', format="%-H:%M %p", title="Time"),
-        alt.Tooltip('Moving avg (3)', format=".1f", title="Temp (F)"),
+       # alt.Tooltip('Datetime PT', format="%-m/%-d/%y", title="Date"),
+        #alt.Tooltip('Datetime PT', format="%-H:%M %p", title="Time"),
+        #alt.Tooltip('Moving avg (3)', format=".1f", title="Temp (F)"),
     ]
 )
 st.altair_chart(chart1, use_container_width=True)
