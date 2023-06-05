@@ -25,11 +25,11 @@ df2 = df[['Datetime PT','Moving avg (3)']]
 chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
     y=alt.Y('Moving avg (3):Q', title= "Degrees F"),
-    tooltip=[
-       # alt.Tooltip('Datetime PT', format="%-m/%-d/%y", title="Date"),
-        #alt.Tooltip('Datetime PT', format="%-H:%M %p", title="Time"),
-        #alt.Tooltip('Moving avg (3)', format=".1f", title="Temp (F)"),
-    ]
+    #tooltip=[
+       #alt.Tooltip('Datetime PT', format="%-m/%-d/%y", title="Date"),
+       #alt.Tooltip('Datetime PT', format="%-H:%M %p", title="Time"),
+       #alt.Tooltip('Moving avg (3)', format=".1f", title="Temp (F)"),
+    #]
 )
 st.altair_chart(chart1, use_container_width=True)
 
@@ -69,8 +69,23 @@ df_date_index = df.set_index('Datetime PT')
 df_date_index = df_date_index.sort_index(ascending=False)
 df_date_index.index = df_date_index.index.strftime('%Y-%m-%d  %H:%M')
 df_date_index.index.rename('Timestamp', inplace= True)
-df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": '     Temp F', 'Moving avg (6)': 'Moving avg'})
-st.write(df_date_index[['BME Temp (F)', 'Pressure', 'Humidity']].round(2))
+df_date_index['Pressure'] = df_date_index['Pressure']*0.029529983071445
+df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": '     Temp F', 'Moving avg (6)': 'Moving avg', 'Pressure':'Barametric\nPressure'})
+df_temp = df_date_index[['BME Temp (F)', 'Barametric\nPressure', 'Humidity']]
+df_temp['Humidity'] = df_temp['Humidity']*.01
+
+#st.write(df_date_index.dtypes)
+#df_date_index['Humidity'] = df['Humidity'].apply(lambda x: '{:.1%}'.format(x))
+#st.write(df.style.format({'Humidity': '{:.2%}'}))
+#df_data_index['Humidity'] = df_data_index['Humidity']
+df_temp = df_temp.style.format({'BME Temp (F)':'{:.1f}', 'Barametric\nPressure': '{:.1f}', 'Humidity': '{:.1%}'})
+#df_temp = df_data_index.drop('Pico Temp (F)')
+st.write(df_temp)
+#st.write(df_date_index.style.format({'BME Temp (F)':'{:.1f}', 'Barametric\nPressure': '{:.1f}', 'Humidity': '{:.1%}%'}))
+
+#st.write(df_data_index)
+#st.write(df.style.format({'Humidity': '{:.1%}'}))
+#st.write(df_date_index[['BME Temp (F)', 'Barametric\nPressure', 'Humidity']]) #.round(2))
 
 st.write('**Data Flow**')
 st.write('Sensor > Pi Pico > MQTT > HiveMQ.cloud > MQTT > Rasberry Pi with Node Red > Google API > Google Sheets > Streamlit.io Python visualization')
