@@ -5,8 +5,8 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 
-st.title('Backyard temperature (F)')
-st.write('Measured by a Pi Pico W, a BME280 sensor and MicroPython')
+st.title('Porch temperature (F)')
+st.write('Measured by a Pi Pico W, a BME280 sensor, and MicroPython')
 st.write('Updated every 30 min')
 st.write('')
 
@@ -22,7 +22,7 @@ df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean()
 
 # Publish chart of temperature over time
 df2 = df[['Datetime PT','BME Temp (F)']]
-df2['Datetime PT'] = df['Datetime PT'] + pd.DateOffset(hours=7)  # 'Datetime PT' is in Tacific time but Altaire assumes UTC.  So need to convert to UTC.
+df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=7)  
 chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
     y=alt.Y('BME Temp (F):Q', title= "Degrees F"),
@@ -36,7 +36,7 @@ st.altair_chart(chart1, use_container_width=True)
 
 # Create Max/Min by day dataframe
 df3 = df
-#df3['Datetime PT'] = df3['Datetime PT'] + pd.DateOffset(hours=7)
+df3['Datetime PT'] = df3['Datetime PT'] + pd.DateOffset(hours=7)
 #df3['Datetime PT'] = pd.to_datetime(df3['Datetime PT']).dt.date
 df_day_max =  df3.groupby(pd.Grouper(key='Datetime PT', axis=0, 
                       freq='1D', sort=True)).max().rename(columns={'BME Temp (F)':'Max temp'}).drop(['Pico Temp (F)','Moving avg (3)', 'Pressure', 'Humidity'], axis=1)
@@ -47,6 +47,7 @@ df_day.index.rename('Date', inplace= True)
 
 # Publish Max/Min by day chart
 df_day_index = df_day.reset_index()
+
 chart2 = alt.Chart(df_day_index, title= "Max/Min by day").mark_line().transform_fold(
     fold=['Max temp','Min temp'], 
     as_=['variable', 'value']
@@ -64,12 +65,17 @@ chart2 = alt.Chart(df_day_index, title= "Max/Min by day").mark_line().transform_
 st.altair_chart(chart2, use_container_width=True)
 
 # Write table of daily Max/Min values
-df_day.index = df_day.index.date
-df_day.index.rename('Date', inplace= True)
-st.write(df_day.round(2))
+df4 = df_day
+df4.index = df4.index.date
+df4.index += pd.Timedelta('0 hours')
+df4.index.rename('Date', inplace= True)
+df4.rename(columns={'BME Temp (F)':'Temp (F)'}, inplace=True)
+st.write(df4.round(1))
 
 # Write table of readings
-df_date_index = df.set_index('Datetime PT')
+df5 = df
+df5['Datetime PT'] = df5['Datetime PT'] + pd.DateOffset(hours=-7)
+df_date_index = df5.set_index('Datetime PT')
 df_date_index = df_date_index.sort_index(ascending=False)
 df_date_index.index = df_date_index.index.strftime('%Y-%m-%d  %H:%M')
 df_date_index.index.rename('Timestamp', inplace= True)
