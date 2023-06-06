@@ -18,27 +18,29 @@ df['Datetime PT'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df.drop('Datetime (Pacific Time)', axis=1, inplace=True)
 df = df[~(df['Datetime PT'] < '2023-03-20 00:00')]
 df['Datetime PT'] = pd.to_datetime(df['Datetime PT'],format='%-d/%-m/%-y %H:%M')
-
 df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean() 
 
 # Publish chart of temperature over time
-df2 = df[['Datetime PT','Moving avg (3)']]
+df2 = df[['Datetime PT','BME Temp (F)']]
 df2['Datetime PT'] = df['Datetime PT'] + pd.DateOffset(hours=7)  # 'Datetime PT' is in Tacific time but Altaire assumes UTC.  So need to convert to UTC.
 chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
-    y=alt.Y('Moving avg (3):Q', title= "Degrees F"),
+    y=alt.Y('BME Temp (F):Q', title= "Degrees F"),
     tooltip=[
        alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
        #alt.Tooltip('Datetime PT', format="%-H:%-M %p", title="Time"),
-       alt.Tooltip('Moving avg (3)', format=".1f", title="Temp (F)"),
+       alt.Tooltip('BME Temp (F)', format=".1f", title="Temp (F)"),
     ]
 )
 st.altair_chart(chart1, use_container_width=True)
 
 # Create Max/Min by day dataframe
-df_day_max =  df.groupby(pd.Grouper(key='Datetime PT', axis=0, 
+df3 = df
+#df3['Datetime PT'] = df3['Datetime PT'] + pd.DateOffset(hours=7)
+#df3['Datetime PT'] = pd.to_datetime(df3['Datetime PT']).dt.date
+df_day_max =  df3.groupby(pd.Grouper(key='Datetime PT', axis=0, 
                       freq='1D', sort=True)).max().rename(columns={'BME Temp (F)':'Max temp'}).drop(['Pico Temp (F)','Moving avg (3)', 'Pressure', 'Humidity'], axis=1)
-df_day_min =  df.groupby(pd.Grouper(key='Datetime PT', axis=0, 
+df_day_min =  df3.groupby(pd.Grouper(key='Datetime PT', axis=0, 
                       freq='1D', sort=True)).min().rename(columns={'BME Temp (F)':'Min temp'}).drop(['Pico Temp (F)','Moving avg (3)','Pico Temp (F)','Moving avg (3)', 'Pressure', 'Humidity'], axis=1)
 df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
 df_day.index.rename('Date', inplace= True)
@@ -72,22 +74,22 @@ df_date_index = df_date_index.sort_index(ascending=False)
 df_date_index.index = df_date_index.index.strftime('%Y-%m-%d  %H:%M')
 df_date_index.index.rename('Timestamp', inplace= True)
 df_date_index['Pressure'] = df_date_index['Pressure']*0.029529983071445
-df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": '     Temp F', 'Moving avg (6)': 'Moving avg', 'Pressure':'Barametric\nPressure'})
-df_temp = df_date_index[['BME Temp (F)', 'Barametric\nPressure', 'Humidity']]
+df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": '     Temp F', 'Moving avg (6)': 'Moving avg', 'Pressure':'Pressure (inHg)'})
+df_temp = df_date_index[['BME Temp (F)', 'Pressure (inHg)', 'Humidity']]
 df_temp['Humidity'] = df_temp['Humidity']*.01
 
 #st.write(df_date_index.dtypes)
 #df_date_index['Humidity'] = df['Humidity'].apply(lambda x: '{:.1%}'.format(x))
 #st.write(df.style.format({'Humidity': '{:.2%}'}))
 #df_data_index['Humidity'] = df_data_index['Humidity']
-df_temp = df_temp.style.format({'BME Temp (F)':'{:.1f}', 'Barametric\nPressure': '{:.1f}', 'Humidity': '{:.1%}'})
+df_temp = df_temp.style.format({'BME Temp (F)':'{:.1f}', 'Pressure (inHg)': '{:.1f}', 'Humidity': '{:.1%}'})
 #df_temp = df_data_index.drop('Pico Temp (F)')
 st.write(df_temp)
-#st.write(df_date_index.style.format({'BME Temp (F)':'{:.1f}', 'Barametric\nPressure': '{:.1f}', 'Humidity': '{:.1%}%'}))
+#st.write(df_date_index.style.format({'BME Temp (F)':'{:.1f}', 'Pressure (inHg)': '{:.1f}', 'Humidity': '{:.1%}%'}))
 
 #st.write(df_data_index)
 #st.write(df.style.format({'Humidity': '{:.1%}'}))
-#st.write(df_date_index[['BME Temp (F)', 'Barametric\nPressure', 'Humidity']]) #.round(2))
+#st.write(df_date_index[['BME Temp (F)', 'Pressure (inHg)', 'Humidity']]) #.round(2))
 
 st.write('**Data Flow**')
 st.write('Sensor > Pi Pico > MQTT > HiveMQ.cloud > MQTT > Rasberry Pi with Node Red > Google API > Google Sheets > Streamlit.io Python visualization')
