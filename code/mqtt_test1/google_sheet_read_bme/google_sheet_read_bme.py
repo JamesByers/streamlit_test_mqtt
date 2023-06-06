@@ -36,23 +36,24 @@ st.altair_chart(chart1, use_container_width=True)
 
 # Create Max/Min by day dataframe
 df3 = df
-df3['Datetime PT'] = df3['Datetime PT'] + pd.DateOffset(hours=7)
-#df3['Datetime PT'] = pd.to_datetime(df3['Datetime PT']).dt.date
-df_day_max =  df3.groupby(pd.Grouper(key='Datetime PT', axis=0, 
-                      freq='1D', sort=True)).max().rename(columns={'BME Temp (F)':'Max temp'}).drop(['Pico Temp (F)','Moving avg (3)', 'Pressure', 'Humidity'], axis=1)
-df_day_min =  df3.groupby(pd.Grouper(key='Datetime PT', axis=0, 
-                      freq='1D', sort=True)).min().rename(columns={'BME Temp (F)':'Min temp'}).drop(['Pico Temp (F)','Moving avg (3)','Pico Temp (F)','Moving avg (3)', 'Pressure', 'Humidity'], axis=1)
+df3['Datetime PT'] = df3['Datetime PT'] + pd.DateOffset(hours=0)
+df3 = df3.set_index(pd.DatetimeIndex(df['Datetime PT']))
+df_day_max = df3.resample('D').max().rename(columns={'BME Temp (F)':'Max temp'}).drop(['Datetime PT','Pico Temp (F)','Moving avg (3)', 'Pressure', 'Humidity'], axis=1)
+df_day_min = df3.resample('D').min().rename(columns={'BME Temp (F)':'Min temp'}).drop(['Datetime PT','Pico Temp (F)','Moving avg (3)', 'Pressure', 'Humidity'], axis=1)
 df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
 df_day.index.rename('Date', inplace= True)
+df_day.sort_index()
+
+
 
 # Publish Max/Min by day chart
 df_day_index = df_day.reset_index()
-
+df_day_index['Date'] = df_day_index['Date'] + pd.DateOffset(days=1) # This correction was needed for correct tooltip date but not clear why.
 chart2 = alt.Chart(df_day_index, title= "Max/Min by day").mark_line().transform_fold(
     fold=['Max temp','Min temp'], 
     as_=['variable', 'value']
 ).encode(
-    x=alt.X('Date:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
+    x=alt.X('Date:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)), #tickCount="day", tickBand = 'extent', bandPosition = 0.5 , 
     y=alt.Y('value:Q', title= "Degrees F"),
     color =alt.Color('variable:N', legend=alt.Legend(
         orient='bottom-right', title=None)),
