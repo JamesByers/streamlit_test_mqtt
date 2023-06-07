@@ -5,6 +5,8 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 
+st.set_page_config(layout="wide")
+
 st.title('Porch temperature (F)')
 st.write('Measured by a Pi Pico W, a BME280 sensor, and MicroPython')
 st.write('Updated every 30 min')
