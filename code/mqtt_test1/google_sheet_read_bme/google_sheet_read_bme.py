@@ -7,7 +7,7 @@ import altair as alt
 
 st.set_page_config(layout="wide")
 
-st.title('Porch temperature (F)')
+st.title('Back porch temperature (F)')
 st.write('Measured by a Pi Pico W, a BME280 sensor, and MicroPython')
 st.write('Updated every 30 min')
 st.write('')
@@ -25,7 +25,7 @@ df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean()
 # Publish chart of temperature over time
 df2 = df[['Datetime PT','BME Temp (F)']]
 df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=7)  
-chart1 = alt.Chart(df2, title= "Backyard Temperature").mark_line().encode(
+chart1 = alt.Chart(df2, title= "Back Porch Temperature").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
     y=alt.Y('BME Temp (F):Q', title= "Degrees F"),
     tooltip=[
