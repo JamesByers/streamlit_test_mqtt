@@ -64,7 +64,7 @@ chart2 = alt.Chart(df_day_index, title= "Max/Min by day").mark_line().transform_
     ]
 )
 st.altair_chart(chart2, use_container_width=True)
-
+#
 # Write table of daily Max/Min values
 df4 = df_day
 df4.index = df4.index.date
@@ -75,7 +75,7 @@ st.write(df4.round(1))
 
 # Write table of readings
 df5 = df
-df5['Datetime PT'] = df5['Datetime PT'] + pd.DateOffset(hours=-7)
+df5['Datetime PT'] = df5['Datetime PT'] + pd.DateOffset(hours=-0)
 df_date_index = df5.set_index('Datetime PT')
 df_date_index = df_date_index.sort_index(ascending=False)
 df_date_index.index = df_date_index.index.strftime('%Y-%m-%d  %H:%M')
