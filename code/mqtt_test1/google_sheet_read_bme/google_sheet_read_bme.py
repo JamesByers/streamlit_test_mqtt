@@ -13,9 +13,7 @@ st.write('Updated every 30 min')
 st.write('')
 
 # Read in and prep raw data
-#df = pd.read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT7WzKwr6VIXA4iGEQDBluX677Ed1UlYtOXUI4I7MwiySxa0Ja_o4Mh05nLp7MAdh8ZmyyARSexSm5x/pub?gid=0&single=true&output=csv")
 df = pd.read_csv("https://docs.google.com/spreadsheets/d/1iSZacyhgC-hp35HY-fwOgzEgPoj22BhM49HSh325-8o/gviz/tq?tqx=out:csv&sheet=raw_data")
-#df
 df['Datetime PT'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df.drop('Datetime (Pacific Time)', axis=1, inplace=True)
 df = df[~(df['Datetime PT'] < '2023-03-20 00:00')]
@@ -83,22 +81,12 @@ df_date_index = df_date_index.sort_index(ascending=False)
 df_date_index.index = df_date_index.index.strftime('%Y-%m-%d  %H:%M')
 df_date_index.index.rename('Timestamp', inplace= True)
 df_date_index['Pressure'] = df_date_index['Pressure']*0.029529983071445
-df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": '     Temp F', 'Moving avg (6)': 'Moving avg', 'Pressure':'Pressure (inHg)'})
-df_temp = df_date_index[['BME Temp (F)', 'Pressure (inHg)', 'Humidity']]
-df_temp['Humidity'] = df_temp['Humidity']*.01
+df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": '     Temp F', 'Moving avg (6)': 'Moving avg', 'Pressure':'Pressure (inHg)', 'Humidity':'Humidity (Rel.)'})
+df_temp = df_date_index[['BME Temp (F)', 'Pressure (inHg)', 'Humidity (Rel.)']]
+df_temp['Humidity (Rel.)'] = df_temp['Humidity (Rel.)']*.01
 
-#st.write(df_date_index.dtypes)
-#df_date_index['Humidity'] = df['Humidity'].apply(lambda x: '{:.1%}'.format(x))
-#st.write(df.style.format({'Humidity': '{:.2%}'}))
-#df_data_index['Humidity'] = df_data_index['Humidity']
-df_temp = df_temp.style.format({'BME Temp (F)':'{:.1f}', 'Pressure (inHg)': '{:.1f}', 'Humidity': '{:.1%}'})
-#df_temp = df_data_index.drop('Pico Temp (F)')
+df_temp = df_temp.style.format({'BME Temp (F)':'{:.1f}', 'Pressure (inHg)': '{:.1f}', 'Humidity (Rel.)': '{:.1%}'})
 st.write(df_temp)
-#st.write(df_date_index.style.format({'BME Temp (F)':'{:.1f}', 'Pressure (inHg)': '{:.1f}', 'Humidity': '{:.1%}%'}))
-
-#st.write(df_data_index)
-#st.write(df.style.format({'Humidity': '{:.1%}'}))
-#st.write(df_date_index[['BME Temp (F)', 'Pressure (inHg)', 'Humidity']]) #.round(2))
 
 st.write('**Data Flow**')
 st.write('Sensor > Pi Pico > MQTT > HiveMQ.cloud > MQTT > Rasberry Pi with Node Red > Google API > Google Sheets > Streamlit.io Python visualization')
