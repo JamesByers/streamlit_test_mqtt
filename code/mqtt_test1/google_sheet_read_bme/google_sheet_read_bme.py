@@ -26,7 +26,7 @@ current_pressure = round(df.at[len(df)-1, 'Pressure']*0.029529983071445, 2)
 pressure_change = df.at[len(df)-1, 'Pressure']*0.029529983071445 - df.at[len(df)-7, 'Pressure']*0.029529983071445
 if abs(pressure_change) < .02:
     pressure_trend = 'Stable'
-    pressure_color = 'dimgray'    #'#1f77b4'
+    pressure_color = '#8B4513'    #'#1f77b4'
 elif pressure_change >= 0 :
     pressure_trend = "Rising &#8593;"
     pressure_color = 'green'
@@ -115,7 +115,7 @@ df_temp['Barametric Pressure'] = df_temp['Pressure']*0.029529983071445
 humidity_chart = alt.Chart(df_temp, title= "Barametric Pressure").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/-%y", tickCount="day", title=None)),
     y=alt.Y('Barametric Pressure:Q', title= "Pressure", scale=alt.Scale(domain=[29.2, 30.2])),
-    color = alt.value('darkmagenta'),
+    color = alt.value('#D2691E'),
     tooltip=[
        alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
        alt.Tooltip('Barametric Pressure', format=".2f", title="Pressure"),
