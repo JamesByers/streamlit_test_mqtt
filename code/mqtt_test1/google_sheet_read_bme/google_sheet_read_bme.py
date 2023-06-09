@@ -26,7 +26,7 @@ current_pressure = round(df.at[len(df)-1, 'Pressure']*0.029529983071445, 2)
 pressure_change = df.at[len(df)-1, 'Pressure']*0.029529983071445 - df.at[len(df)-7, 'Pressure']*0.029529983071445
 if abs(pressure_change) < .02:
     pressure_trend = 'Stable'
-    pressure_color = '#1f77b4'
+    pressure_color = 'dimgray'    #'#1f77b4'
 elif pressure_change >= 0 :
     pressure_trend = "Rising &#8593;"
     pressure_color = 'green'
@@ -42,7 +42,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True
 )
 
-# Publish chart of temperature over time
+# Chart temperature over time
 df2 = df[['Datetime PT','BME Temp (F)']]
 df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=7) 
 df2['hot_flag'] = df2['BME Temp (F)'] >=75
@@ -58,53 +58,12 @@ temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
        alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
        alt.Tooltip('BME Temp (F)', format=".1f", title="Temp (F)"),
     ],
-#    color=alt.Color('BME Temp (F):Q',
-#            scale=alt.Scale(
- #              domain=[0,75], 
- #               range=['blue','red'], 
- #               interpolate=None
-#                ),
-
-#    color = alt.condition('datum["BME Temp (F)"] >70', 
- #                          alt.value('red'), 
- #                          alt.value('green')
- #   ),
  ).configure_range(
         category={'scheme': 'category10'}
  ).configure_legend(
     disable=True
 )
 st.altair_chart(temperature_chart, use_container_width=True)
-
-#alt.Chart(df).transform_calculate(
-#    negative='datum.y < 0'
-#).mark_area().encode(
-#    x='x',
-#    y=alt.Y('y', impute={'value': 0}),
-#    color='negative:N'
-#)
-st.markdown("""<!---
-
-# Chart temp and humidity together
-df_temp = df[['Datetime PT','BME Temp (F)', 'Humidity']]
-base = alt.Chart(df_temp).encode(
-    alt.X('Datetime PT:T')#.axis(title=None) #'Temperature and Humidity'))
-)
-temperature_values = base.mark_line(stroke='#5276A7', interpolate='monotone').encode(
-    alt.Y('BME Temp (F):Q')#.title('Temperature (F)', titleColor='#57A44C'),
-)
-
-humidity_values = base.mark_line(stroke='#5276A7', interpolate='monotone').encode(
-    alt.Y2('Humidity:Q'), titleColor='#5276A7',)
-
-alt.layer(temperature_values, humidity_values).resolve_scale(
-     y='independent'
-)
-#st.altair_chart(chart3) #.resolve_scale(y='independent'))temperature_values + humidity_values
-
-#st.altair_chart(chart3, use_container_width=True)
---->
-""", unsafe_allow_html= True)
 
 # Create Max/Min by day dataframe
 df3 = df
@@ -116,7 +75,7 @@ df_day = pd.concat([df_day_min, df_day_max], axis=1).sort_index(ascending=False)
 df_day.index.rename('Date', inplace= True)
 df_day.sort_index()
 
-# Publish Max/Min by day chart
+# Chart Max/Min by day
 df_day_index = df_day.reset_index()
 df_day_index['Date'] = df_day_index['Date'] + pd.DateOffset(days=1) # This correction was needed for correct tooltip date but not clear why.
 chart2 = alt.Chart(df_day_index, title= "Temperature Max/Min").mark_line().transform_fold(
@@ -135,7 +94,7 @@ chart2 = alt.Chart(df_day_index, title= "Temperature Max/Min").mark_line().trans
 )
 st.altair_chart(chart2, use_container_width=True)
 
-#Chart of humidity over time
+#Chart humidity over time
 df_temp= df[['Datetime PT','Humidity']]
 df_temp['Datetime PT'] = df_temp['Datetime PT'] + pd.DateOffset(hours=7)  
 humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
@@ -149,8 +108,6 @@ humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
 )
 st.altair_chart(humidity_chart, use_container_width=True)
 
-#st.altair_chart(temperature_chart + humidity_chart)#.resolve_scale(y='independent') #temperature_values + humidity_values
-
 #Chart of pressure over time
 df_temp= df[['Datetime PT','Pressure']]
 df_temp['Datetime PT'] = df_temp['Datetime PT'] + pd.DateOffset(hours=7)
@@ -158,7 +115,7 @@ df_temp['Barametric Pressure'] = df_temp['Pressure']*0.029529983071445
 humidity_chart = alt.Chart(df_temp, title= "Barametric Pressure").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/-%y", tickCount="day", title=None)),
     y=alt.Y('Barametric Pressure:Q', title= "Pressure", scale=alt.Scale(domain=[29.2, 30.2])),
-    color = alt.value('green'),
+    color = alt.value('darkmagenta'),
     tooltip=[
        alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
        alt.Tooltip('Barametric Pressure', format=".2f", title="Pressure"),
