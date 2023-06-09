@@ -96,14 +96,15 @@ st.altair_chart(chart2, use_container_width=True)
 
 #Chart humidity over time
 df_temp= df[['Datetime PT','Humidity']]
-df_temp['Datetime PT'] = df_temp['Datetime PT'] + pd.DateOffset(hours=7)  
+df_temp['Datetime PT'] = df_temp['Datetime PT'] + pd.DateOffset(hours=7)
+df_temp['Humidity'] = df_temp['Humidity']/100.0
 humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/-%y", tickCount="day", title=None)),
-    y=alt.Y('Humidity:Q', title= "Humidity"),
+    y=alt.Y('Humidity:Q', title= "% Humidity", axis=alt.Axis(format='%')),
     color = alt.value('green'),
     tooltip=[
        alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
-       alt.Tooltip('Humidity', format=".1f", title="Humidity"),
+       alt.Tooltip('Humidity', format=".1%", title="% Humidity"),
     ]
 )
 st.altair_chart(humidity_chart, use_container_width=True)
