@@ -7,9 +7,8 @@ import altair as alt
 st.set_page_config(layout="wide")
 
 st.title('Back porch temperature (F)')
-st.write('Measured by a Pi Pico W, a BME280 sensor, and MicroPython')
-st.write('Updated every 30 min')
-st.write('')
+st.write('Measured by a Pi Pico W, a BME280 sensor, and MicroPython  \nUpdated every 30 min')
+#st.write('')
 
 import streamlit as st
 
@@ -20,6 +19,15 @@ df.drop('Datetime (Pacific Time)', axis=1, inplace=True)
 df = df[~(df['Datetime PT'] < '2023-03-20 00:00')]
 df['Datetime PT'] = pd.to_datetime(df['Datetime PT'],format='%-d/%-m/%-y %H:%M')
 df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean() 
+current_temperature = df.at[len(df)-1, 'BME Temp (F)']
+current_humidity = df.at[len(df)-1, 'Humidity']
+
+st.markdown(f"""
+  ### Temperature: <span style="color:#1f77b4">{current_temperature} F</span>
+  ### Humidity:    <span style="color:#1f77b4">{current_humidity} F</span> 
+  #### 
+""", unsafe_allow_html=True
+)
 
 # Publish chart of temperature over time
 df2 = df[['Datetime PT','BME Temp (F)']]
@@ -29,7 +37,6 @@ temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
     hot = 'datum["BME Temp (F)"] >=75.0'
 ).mark_line().encode(  #filled=True, size=20
 
-#temperature_chart = alt.Chart(df2, title= "Temperature").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
     y=alt.Y('BME Temp (F):Q', title= "Degrees F", impute={'value': 'np.nan'}),
 #    color = ('hot:N'), #, alt.Legend=None},
@@ -86,8 +93,6 @@ alt.layer(temperature_values, humidity_values).resolve_scale(
 --->
 """, unsafe_allow_html= True)
 
-#st.altair_chart(temperature_chart,humidity_chart.resolve_scale(y='independent')) #temperature_values + humidity_values
-
 # Create Max/Min by day dataframe
 df3 = df
 df3['Datetime PT'] = df3['Datetime PT'] + pd.DateOffset(hours=0)
@@ -130,6 +135,11 @@ humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
     ]
 )
 st.altair_chart(humidity_chart, use_container_width=True)
+
+#st.altair_chart(temperature_chart + humidity_chart)#.resolve_scale(y='independent') #temperature_values + humidity_values
+
+
+
 #
 # Write table of daily Max/Min values
 df4 = df_day
