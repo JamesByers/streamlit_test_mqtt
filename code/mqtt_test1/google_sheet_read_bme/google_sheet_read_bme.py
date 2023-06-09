@@ -19,6 +19,7 @@ df.drop('Datetime (Pacific Time)', axis=1, inplace=True)
 df = df[~(df['Datetime PT'] < '2023-03-20 00:00')]
 df['Datetime PT'] = pd.to_datetime(df['Datetime PT'],format='%-d/%-m/%-y %H:%M')
 df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean() 
+
 current_temperature = df.at[len(df)-1, 'BME Temp (F)']
 current_humidity = df.at[len(df)-1, 'Humidity']
 current_pressure = round(df.at[len(df)-1, 'Pressure']*0.029529983071445, 2)
@@ -27,10 +28,10 @@ if abs(pressure_change) < .02:
     pressure_trend = 'Stable'
     pressure_color = '#1f77b4'
 elif pressure_change >= 0 :
-    pressure_trend = "Rising"
+    pressure_trend = "Rising &#8593;"
     pressure_color = 'green'
 else :
-    pressure_trend = "Falling"
+    pressure_trend = "Falling &#8595;"
     pressure_color = 'red'
     
 st.markdown(f"""
