@@ -26,7 +26,7 @@ current_pressure = round(df.at[len(df)-1, 'Pressure']*0.029529983071445, 2)
 pressure_change = df.at[len(df)-1, 'Pressure']*0.029529983071445 - df.at[len(df)-7, 'Pressure']*0.029529983071445
 if abs(pressure_change) < .02:
     pressure_trend = 'Stable'
-    pressure_color = '#8B4513'    #'#1f77b4'
+    pressure_color = '#1f77b4'
 elif pressure_change >= 0 :
     pressure_trend = "Rising &#8593;"
     pressure_color = 'green'
