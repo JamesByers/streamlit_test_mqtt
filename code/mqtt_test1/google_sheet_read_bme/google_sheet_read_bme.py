@@ -150,6 +150,20 @@ st.altair_chart(humidity_chart, use_container_width=True)
 
 #st.altair_chart(temperature_chart + humidity_chart)#.resolve_scale(y='independent') #temperature_values + humidity_values
 
+#Chart of pressure over time
+df_temp= df[['Datetime PT','Pressure']]
+df_temp['Datetime PT'] = df_temp['Datetime PT'] + pd.DateOffset(hours=7)
+df_temp['Barametric Pressure'] = df_temp['Pressure']*0.029529983071445
+humidity_chart = alt.Chart(df_temp, title= "Barametric Pressure").mark_line().encode(
+    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/-%y", tickCount="day", title=None)),
+    y=alt.Y('Barametric Pressure:Q', title= "Pressure", scale=alt.Scale(domain=[29.2, 30.2])),
+    color = alt.value('green'),
+    tooltip=[
+       alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
+       alt.Tooltip('Barametric Pressure', format=".2f", title="Pressure"),
+    ]
+)
+st.altair_chart(humidity_chart, use_container_width=True)
 
 
 #
