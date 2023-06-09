@@ -21,10 +21,22 @@ df['Datetime PT'] = pd.to_datetime(df['Datetime PT'],format='%-d/%-m/%-y %H:%M')
 df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean() 
 current_temperature = df.at[len(df)-1, 'BME Temp (F)']
 current_humidity = df.at[len(df)-1, 'Humidity']
-
+current_pressure = round(df.at[len(df)-1, 'Pressure']*0.029529983071445, 2)
+pressure_change = df.at[len(df)-1, 'Pressure']*0.029529983071445 - df.at[len(df)-7, 'Pressure']*0.029529983071445
+if abs(pressure_change) < .02:
+    pressure_trend = 'Stable'
+    pressure_color = '#1f77b4'
+elif pressure_change >= 0 :
+    pressure_trend = "Rising"
+    pressure_color = 'green'
+else :
+    pressure_trend = "Falling"
+    pressure_color = 'red'
+    
 st.markdown(f"""
   ### Temperature: <span style="color:#1f77b4">{current_temperature} F</span>
   ### Humidity:    <span style="color:#1f77b4">{current_humidity} F</span> 
+  ### Barametric Pressure: <span style="color:#1f77b4">{current_pressure} </span><span style="color:{pressure_color}">{pressure_trend} </span>
   #### 
 """, unsafe_allow_html=True
 )
@@ -34,7 +46,7 @@ df2 = df[['Datetime PT','BME Temp (F)']]
 df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=7) 
 df2['hot_flag'] = df2['BME Temp (F)'] >=75
 temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
-    hot = 'datum["BME Temp (F)"] >=75.0'
+    hot = 'datum["BME Temp (F)"] >=75.0'   # This line probably can be deleted
 ).mark_line().encode(  #filled=True, size=20
 
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
@@ -106,7 +118,7 @@ df_day.sort_index()
 # Publish Max/Min by day chart
 df_day_index = df_day.reset_index()
 df_day_index['Date'] = df_day_index['Date'] + pd.DateOffset(days=1) # This correction was needed for correct tooltip date but not clear why.
-chart2 = alt.Chart(df_day_index, title= "Temperature Max/Min by day").mark_line().transform_fold(
+chart2 = alt.Chart(df_day_index, title= "Temperature Max/Min").mark_line().transform_fold(
     fold=['Max temp','Min temp'], 
     as_=['variable', 'value']
 ).encode(
