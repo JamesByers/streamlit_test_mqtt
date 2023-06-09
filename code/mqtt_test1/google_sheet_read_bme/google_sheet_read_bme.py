@@ -25,8 +25,8 @@ current_humidity = df.at[len(df)-1, 'Humidity']
 current_pressure = round(df.at[len(df)-1, 'Pressure']*0.029529983071445, 2)
 pressure_change = df.at[len(df)-1, 'Pressure']*0.029529983071445 - df.at[len(df)-7, 'Pressure']*0.029529983071445
 if abs(pressure_change) < .02:
-    pressure_trend = 'Stable'
-    pressure_color = '#1f77b4'
+    pressure_trend = '(stable)'
+    pressure_color = '#A9A9A9'
 elif pressure_change >= 0 :
     pressure_trend = "Rising &#8593;"
     pressure_color = 'green'
@@ -36,7 +36,7 @@ else :
     
 st.markdown(f"""
   ### Temperature: <span style="color:#1f77b4">{current_temperature} F</span>
-  ### Humidity:    <span style="color:#1f77b4">{current_humidity} F</span> 
+  ### Humidity:    <span style="color:#1f77b4">{current_humidity}%</span> 
   ### Barametric Pressure: <span style="color:#1f77b4">{current_pressure} </span><span style="color:{pressure_color}">{pressure_trend} </span>
   #### 
 """, unsafe_allow_html=True
