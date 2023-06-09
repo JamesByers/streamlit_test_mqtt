@@ -1,6 +1,5 @@
 # This program publishes analytics to the web
 # Author: JamesByers
-
 import pandas as pd
 import streamlit as st
 import altair as alt
@@ -24,16 +23,17 @@ df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean()
 
 # Publish chart of temperature over time
 df2 = df[['Datetime PT','BME Temp (F)']]
-df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=7)  
+df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=7) 
+df2['hot_flag'] = df2['BME Temp (F)'] >=75
 temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
     hot = 'datum["BME Temp (F)"] >=75.0'
-).mark_line().encode(
+).mark_line().encode(  #filled=True, size=20
 
 #temperature_chart = alt.Chart(df2, title= "Temperature").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
-    y=alt.Y('BME Temp (F):Q', title= "Degrees F", impute={'value': 75.0}),
-    color = ('hot:N'), #, alt.Legend=None},
-    #legend=None,
+    y=alt.Y('BME Temp (F):Q', title= "Degrees F", impute={'value': 'np.nan'}),
+#    color = ('hot:N'), #, alt.Legend=None},
+    color = ('hot_flag'),
     tooltip=[
        alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
        alt.Tooltip('BME Temp (F)', format=".1f", title="Temp (F)"),
@@ -51,6 +51,8 @@ temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
  #   ),
  ).configure_range(
         category={'scheme': 'category10'}
+ ).configure_legend(
+    disable=True
 )
 st.altair_chart(temperature_chart, use_container_width=True)
 
@@ -61,7 +63,8 @@ st.altair_chart(temperature_chart, use_container_width=True)
 #    y=alt.Y('y', impute={'value': 0}),
 #    color='negative:N'
 #)
-'''
+st.markdown("""<!---
+
 # Chart temp and humidity together
 df_temp = df[['Datetime PT','BME Temp (F)', 'Humidity']]
 base = alt.Chart(df_temp).encode(
@@ -80,8 +83,8 @@ alt.layer(temperature_values, humidity_values).resolve_scale(
 #st.altair_chart(chart3) #.resolve_scale(y='independent'))temperature_values + humidity_values
 
 #st.altair_chart(chart3, use_container_width=True)
-
-'''
+--->
+""", unsafe_allow_html= True)
 
 #st.altair_chart(temperature_chart,humidity_chart.resolve_scale(y='independent')) #temperature_values + humidity_values
 
@@ -118,7 +121,7 @@ st.altair_chart(chart2, use_container_width=True)
 df_temp= df[['Datetime PT','Humidity']]
 df_temp['Datetime PT'] = df_temp['Datetime PT'] + pd.DateOffset(hours=7)  
 humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
-    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
+    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/-%y", tickCount="day", title=None)),
     y=alt.Y('Humidity:Q', title= "Humidity"),
     color = alt.value('green'),
     tooltip=[
