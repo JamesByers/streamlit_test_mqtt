@@ -6,7 +6,7 @@ import altair as alt
 
 st.set_page_config(layout="wide")
 
-st.title('Back porch temperature (F)')
+st.title('Back porch weather conditions')
 st.write('Measured by a Pi Pico W, a BME280 sensor, and MicroPython  \nUpdated every 30 min')
 #st.write('')
 
@@ -35,7 +35,7 @@ else :
     pressure_color = 'red'
     
 st.markdown(f"""
-  ### Temperature: <span style="color:#1f77b4">{int(current_temperature)}&deg; F</span>
+  ### Temperature: <span style="color:#1f77b4">{int(current_temperature)} &deg;F</span>
   ### Humidity:    <span style="color:#1f77b4">{int(current_humidity)}%</span> 
   ### Barametric Pressure: <span style="color:#1f77b4">{round(current_pressure,1)} </span><span style="color:{pressure_color}">{pressure_trend} </span>
   #### 
