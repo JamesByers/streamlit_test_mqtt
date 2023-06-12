@@ -36,7 +36,7 @@ else :
     
 st.markdown(f"""
   ### Temperature: <span style="color:#1f77b4">{int(current_temperature)}&deg; F</span>
-  ### Humidity:    <span style="color:#1f77b4">{round(current_humidity, 1)}%</span> 
+  ### Humidity:    <span style="color:#1f77b4">{int(current_humidity)}%</span> 
   ### Barametric Pressure: <span style="color:#1f77b4">{round(current_pressure,1)} </span><span style="color:{pressure_color}">{pressure_trend} </span>
   #### 
 """, unsafe_allow_html=True
