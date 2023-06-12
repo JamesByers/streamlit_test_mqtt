@@ -35,9 +35,9 @@ else :
     pressure_color = 'red'
     
 st.markdown(f"""
-  ### Temperature: <span style="color:#1f77b4">{current_temperature} F</span>
-  ### Humidity:    <span style="color:#1f77b4">{current_humidity}%</span> 
-  ### Barametric Pressure: <span style="color:#1f77b4">{current_pressure} </span><span style="color:{pressure_color}">{pressure_trend} </span>
+  ### Temperature: <span style="color:#1f77b4">{int(current_temperature)}&deg; F</span>
+  ### Humidity:    <span style="color:#1f77b4">{round(current_humidity, 1)}%</span> 
+  ### Barametric Pressure: <span style="color:#1f77b4">{round(current_pressure,1)} </span><span style="color:{pressure_color}">{pressure_trend} </span>
   #### 
 """, unsafe_allow_html=True
 )
@@ -150,7 +150,7 @@ df_temp = df_temp.style.format({'BME Temp (F)':'{:.1f}', 'Pressure (inHg)': '{:.
 st.write(df_temp)
 
 st.write('**Data Flow**')
-st.write('Sensor > Pi Pico > MQTT > HiveMQ.cloud > MQTT > Rasberry Pi with Node Red > Google API > Google Sheets > Streamlit.io Python visualization')
+st.write('Sensor > Pi Pico W > MQTT > HiveMQ.cloud > MQTT > Rasberry Pi with Node Red > Google API > Google Sheets > Streamlit.io > Python visualization')
 link="**Code [repo](https://github.com/JamesByers/streamlit_test_mqtt/blob/main/code/mqtt_test1/google_sheet_read_bme/google_sheet_read_bme.py)**"
 st.markdown(link,unsafe_allow_html=True)
 
