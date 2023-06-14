@@ -18,11 +18,19 @@ df['Datetime PT'] = pd.to_datetime(df['Datetime (Pacific Time)'])
 df.drop('Datetime (Pacific Time)', axis=1, inplace=True)
 df = df[~(df['Datetime PT'] < '2023-03-20 00:00')]
 df['Datetime PT'] = pd.to_datetime(df['Datetime PT'],format='%-d/%-m/%-y %H:%M')
-df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean() 
+df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean()
 
 current_temperature = df.at[len(df)-1, 'BME Temp (F)']
+current_temperature_c = (current_temperature-32)*(5/9)
+df['Pressure'] = (df['Pressure'] *  (1.0 -((0.0065*89)/(current_temperature_c + 0.0065*89 + 273.15)))**(-5.257)) * 0.029529983071445
+
 current_humidity = df.at[len(df)-1, 'Humidity']
-current_pressure = round(df.at[len(df)-1, 'Pressure']*0.029529983071445, 2)
+#P0 = P1 (1 - (0.0065h/ (T + 0.0065h + 273.15))-5.257
+#current_pressure = (df.at[len(df)-1, 'Pressure'] * (1.0 -((0.0065*89)/(current_temperature_c + 0.0065*89 + 273.15)))**(-5.257))*0.029529983071445
+
+#current_pressure = round((df.at[len(df)-1, 'Pressure'] * (1 -((0.0065*780)/(21 + 0.0065*780 + 273.15)))**-5.257)*0.029529983071445, 2)
+#current_pressure = round(df.at[len(df)-1, 'Pressure']*0.029529983071445, 2)
+current_pressure = df.at[len(df)-1, 'Pressure'] 
 pressure_change = df.at[len(df)-1, 'Pressure']*0.029529983071445 - df.at[len(df)-7, 'Pressure']*0.029529983071445
 if abs(pressure_change) < .02:
     pressure_trend = '(stable)'
@@ -141,7 +149,7 @@ df_date_index = df5.set_index('Datetime PT')
 df_date_index = df_date_index.sort_index(ascending=False)
 df_date_index.index = df_date_index.index.strftime('%Y-%m-%d  %H:%M')
 df_date_index.index.rename('Timestamp', inplace= True)
-df_date_index['Pressure'] = df_date_index['Pressure']*0.029529983071445
+#df_date_index['Pressure'] = df_date_index['Pressure']*0.029529983071445
 df_date_index = df_date_index.rename(columns={"Pi Pico Temperature (F)": '     Temp F', 'Moving avg (6)': 'Moving avg', 'Pressure':'Pressure (inHg)', 'Humidity':'Humidity (Rel.)'})
 df_temp = df_date_index[['BME Temp (F)', 'Pressure (inHg)', 'Humidity (Rel.)']]
 df_temp['Humidity (Rel.)'] = df_temp['Humidity (Rel.)']*.01
