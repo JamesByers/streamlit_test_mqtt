@@ -43,8 +43,8 @@ else :
     pressure_color = 'red'
     
 st.markdown(f"""
-  ### Temperature: <span style="color:#1f77b4">{int(current_temperature)} &deg;F</span>
-  ### Humidity:    <span style="color:#1f77b4">{int(current_humidity)}%</span> 
+  ### Temperature: <span style="color:#1f77b4">{int(round(current_temperature, 0))} &deg;F</span>
+  ### Humidity:    <span style="color:#1f77b4">{round(current_humidity, 0)}%</span> 
   ### Barametric Pressure: <span style="color:#1f77b4">{round(current_pressure,1)} </span><span style="color:{pressure_color}">{pressure_trend} </span>
   #### 
 """, unsafe_allow_html=True
@@ -113,8 +113,10 @@ humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
     tooltip=[
        alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
        alt.Tooltip('Humidity', format=".1%", title="% Humidity"),
-    ]
-)
+    ]).transform_filter(
+        alt.FieldRangePredicate(field='Humidity', range=[0,110]))
+       # {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
+
 st.altair_chart(humidity_chart, use_container_width=True)
 
 #Chart of pressure over time
