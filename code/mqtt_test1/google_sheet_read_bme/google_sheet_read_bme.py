@@ -48,10 +48,10 @@ df_temp = df['Datetime PT'] #+ pd.DateOffset(hours=7)
 
 #df_temp = df.style.format({'BME Temp (F)':'{:.1f}'})
 st.markdown(f"""
+  Last Updated: <span style="color:#1f77b4">{df_temp.iloc[len(df_temp)-1].strftime("%Y-%m-%d %H:%M")}</span>
   ## Temperature: <span style="color:#1f77b4">{int(round(current_temperature, 0))} &deg;F</span>
   ## Humidity:    <span style="color:#1f77b4">{int(round(current_humidity, 0))}%</span> 
   ## Barametric Pressure: <span style="color:#1f77b4">{round(current_pressure,1)} </span><span style="color:{pressure_color}">{pressure_trend} </span>
-  ## Last Updated: <span style="color:#1f77b4">{df_temp.iloc[len(df_temp)-1].strftime("%Y-%m-%d %H:%M")}</span>
   ### 
 """, unsafe_allow_html=True
 )
