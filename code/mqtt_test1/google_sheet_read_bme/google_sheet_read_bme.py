@@ -6,9 +6,6 @@ import altair as alt
 
 st.set_page_config(layout="wide")
 
-st.title('Back porch weather conditions')
-st.write('Measured by a Pi Pico W, a BME280 sensor, and MicroPython  \nUpdated every 30 min')
-#st.write('')
 
 import streamlit as st
 
@@ -19,7 +16,7 @@ df.drop('Datetime (Pacific Time)', axis=1, inplace=True)
 df = df[~(df['Datetime PT'] < '2023-03-20 00:00')]
 df['Datetime PT'] = pd.to_datetime(df['Datetime PT'],format='%-d/%-m/%-y %H:%M')
 df['Moving avg (3)'] = df["BME Temp (F)"].rolling(3).mean()
-
+#len(df)
 current_temperature = df.at[len(df)-1, 'BME Temp (F)']
 current_temperature_c = (current_temperature-32)*(5/9)
 df['Pressure'] = (df['Pressure'] *  (1.0 -((0.0065*89)/(current_temperature_c + 0.0065*89 + 273.15)))**(-5.257)) * 0.029529983071445
@@ -41,15 +38,24 @@ elif pressure_change >= 0 :
 else :
     pressure_trend = "Falling &#8595;"
     pressure_color = 'red'
-    
+ 
+
+st.title('Back porch weather conditions')
+st.write('Measured by a Pi Pico W, a BME280 sensor, and MicroPython  \nUpdated every 30 min')
+#st.write('')    
+
+df_temp = df['Datetime PT'] #+ pd.DateOffset(hours=7)
+
+#df_temp = df.style.format({'BME Temp (F)':'{:.1f}'})
 st.markdown(f"""
   ## Temperature: <span style="color:#1f77b4">{int(round(current_temperature, 0))} &deg;F</span>
   ## Humidity:    <span style="color:#1f77b4">{int(round(current_humidity, 0))}%</span> 
   ## Barametric Pressure: <span style="color:#1f77b4">{round(current_pressure,1)} </span><span style="color:{pressure_color}">{pressure_trend} </span>
+  ## Last Updated: <span style="color:#1f77b4">{df_temp.iloc[len(df_temp)-1].strftime("%Y-%m-%d %H:%M")}</span>
   ### 
 """, unsafe_allow_html=True
 )
-
+#Last Updated: {df_temp[0,len(df_temp-1)]}
 # Chart temperature over time
 df2 = df[['Datetime PT','BME Temp (F)']]
 df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=7) 
@@ -63,7 +69,7 @@ temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
 #    color = ('hot:N'), #, alt.Legend=None},
     color = ('hot_flag'),
     tooltip=[
-       alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
+       alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %:%-M %p", title="Time PT"),
        alt.Tooltip('BME Temp (F)', format=".1f", title="Temp (F)"),
     ],
  ).configure_range(
