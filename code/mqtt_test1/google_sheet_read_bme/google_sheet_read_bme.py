@@ -1,4 +1,4 @@
-# This program publishes analytics to the web
+# This program publishes temperature, humidity, and Barametric pressure analytics to the web
 # Author: JamesByers
 import pandas as pd
 import streamlit as st
