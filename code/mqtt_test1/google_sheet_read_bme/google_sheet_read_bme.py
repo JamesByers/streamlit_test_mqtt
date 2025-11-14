@@ -28,7 +28,9 @@ current_humidity = df.at[len(df)-1, 'Humidity']
 #current_pressure = round((df.at[len(df)-1, 'Pressure'] * (1 -((0.0065*780)/(21 + 0.0065*780 + 273.15)))**-5.257)*0.029529983071445, 2)
 #current_pressure = round(df.at[len(df)-1, 'Pressure']*0.029529983071445, 2)
 current_pressure = df.at[len(df)-1, 'Pressure'] 
-pressure_change = df.at[len(df)-1, 'Pressure']*0.029529983071445 - df.at[len(df)-1, 'Pressure']*0.029529983071445
+if len(df) > 7:
+    pressure_change = df.at[len(df)-1, 'Pressure']*0.029529983071445 - df.at[len(df)-1, 'Pressure']*0.029529983071445
+else pressure_change = 0.0
 if abs(pressure_change) < .02:
     pressure_trend = '(stable)'
     pressure_color = '#A9A9A9'
