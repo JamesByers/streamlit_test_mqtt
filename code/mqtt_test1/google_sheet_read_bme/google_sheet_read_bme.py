@@ -6,7 +6,6 @@ import altair as alt
 
 st.set_page_config(layout="wide")
 
-
 import streamlit as st
 
 # Read in and prep raw data
