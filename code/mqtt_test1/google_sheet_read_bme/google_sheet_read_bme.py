@@ -41,7 +41,7 @@ else :
     pressure_color = 'red'
  
 
-st.title('Back porch weather conditions')
+st.title('Garage conditions')
 st.write('Measured by a Pi Pico W, a BME280 sensor, and MicroPython  \nUpdated every 30 min')
 #st.write('')    
 
