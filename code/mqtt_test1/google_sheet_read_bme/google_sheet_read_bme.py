@@ -66,7 +66,7 @@ temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
     hot = 'datum["BME Temp (F)"] >=75.0'   # This line probably can be deleted
 ).mark_line().encode(  #filled=True, size=20
 
-    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%-y", tickCount="hour", title=None)),
+    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%-y", tickCount="day", title=None)),
     y=alt.Y('BME Temp (F):Q', title= "Degrees F", impute={'value': 'np.nan'}),
 #    color = ('hot:N'), #, alt.Legend=None},
     color = ('hot_flag'),
