@@ -152,17 +152,17 @@ df4.index = df4.index.date
 df4.index += pd.Timedelta('0 hours')
 df4.index.rename('Date', inplace= True)
 df4.rename(columns={'BME Temp (F)':'Temp (F)'}, inplace=True)
-st.write(df4.round(1))
+#st.write(df4.round(1))
 # Create a Styler object
 styler = df4.style
 # Apply CSS to right-align all columns (or specific ones)
 # This targets the 'td' (table data) elements
 # You can also target specific columns by name or index
-styler = styler.set_properties(**{'text-align': 'right','format': '.2f'})
+styler = styler.set_properties(**{'text-align': 'right')
 
 # Display the styled DataFrame using st.write()
 # Streamlit will automatically use st.dataframe() and apply the Styler
-st.write(styler.format("{:.2f}"))
+st.write(styler.format("{:.1f}"))
 
 # Write table of readings
 df5 = df
