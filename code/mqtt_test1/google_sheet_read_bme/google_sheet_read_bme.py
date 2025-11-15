@@ -59,7 +59,7 @@ st.markdown(f"""
 #Last Updated: {df_temp[0,len(df_temp-1)]}
 # Chart temperature over time
 df2 = df[['Datetime PT','BME Temp (F)']]
-df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=7) 
+df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=-7) 
 df2['hot_flag'] = df2['BME Temp (F)'] >=75
 temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
     hot = 'datum["BME Temp (F)"] >=75.0'   # This line probably can be deleted
