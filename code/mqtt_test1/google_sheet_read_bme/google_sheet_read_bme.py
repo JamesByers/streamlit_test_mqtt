@@ -151,7 +151,7 @@ df4.index = df4.index.date
 df4.index += pd.Timedelta('0 hours')
 df4.index.rename('Date', inplace= True)
 df4.rename(columns={'BME Temp (F)':'Temp (F)'}, inplace=True)
-#`st.write(df4.round(1))
+st.write(df4.round(1))
 
 # Create a Styler object
 styler = df4.style
