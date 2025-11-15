@@ -60,7 +60,7 @@ st.markdown(f"""
 
 # Chart temperature over time
 df2 = df[['Datetime PT','BME Temp (F)']]
-df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=+7) 
+#df2['Datetime PT'] = df2['Datetime PT'] + pd.DateOffset(hours=+7) 
 df2['hot_flag'] = df2['BME Temp (F)'] >=75
 temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
     hot = 'datum["BME Temp (F)"] >=75.0'   # This line probably can be deleted
@@ -71,7 +71,7 @@ temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
 #    color = ('hot:N'), #, alt.Legend=None},
     color = ('hot_flag'),
     tooltip=[
-       alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
+       alt.Tooltip('Datetime PT', format="%-m/%-d/%-y  %-I:%-M %p", title="Time PT"),
        # alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %:%-M %p", title="Time PT"),
        alt.Tooltip('BME Temp (F)', format=".1f", title="Temp (F)"),
     ],
@@ -120,7 +120,7 @@ humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
     y=alt.Y('Humidity:Q', title= "% Humidity", axis=alt.Axis(format='%')),
     color = alt.value('green'),
     tooltip=[
-       alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
+       alt.Tooltip('Datetime PT', format="%-m/%-d/%-y  %-I:%-M %p", title="Time PT"),
        alt.Tooltip('Humidity', format=".1%", title="% Humidity"),
     ]).transform_filter(
         alt.FieldRangePredicate(field='Humidity', range=[0,110]))
