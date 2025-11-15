@@ -57,6 +57,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True
 )
 #Last Updated: {df_temp[0,len(df_temp-1)]}
+
 # Chart temperature over time
 df2 = df[['Datetime PT','BME Temp (F)']]
 df2['Datetime PT'] = df2['Datetime PT'] # + pd.DateOffset(hours=-7) 
@@ -65,7 +66,7 @@ temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
     hot = 'datum["BME Temp (F)"] >=75.0'   # This line probably can be deleted
 ).mark_line().encode(  #filled=True, size=20
 
-    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
+    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%-y", tickCount="day", title=None)),
     y=alt.Y('BME Temp (F):Q', title= "Degrees F", impute={'value': 'np.nan'}),
 #    color = ('hot:N'), #, alt.Legend=None},
     color = ('hot_flag'),
@@ -97,7 +98,7 @@ chart2 = alt.Chart(df_day_index, title= "Temperature Max/Min").mark_line().trans
     fold=['Max temp','Min temp'], 
     as_=['variable', 'value']
 ).encode(
-    x=alt.X('Date:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)), #tickCount="day", tickBand = 'extent', bandPosition = 0.5 , 
+    x=alt.X('Date:T', axis=alt.Axis(format="%-m/%-d/%-y", tickCount="day", title=None)), #tickCount="day", tickBand = 'extent', bandPosition = 0.5 , 
     y=alt.Y('value:Q', title= "Degrees F"),
     color =alt.Color('variable:N', legend=alt.Legend(
         orient='bottom-right', title=None)),
@@ -114,7 +115,7 @@ df_temp= df[['Datetime PT','Humidity']]
 df_temp['Datetime PT'] = df_temp['Datetime PT'] # + pd.DateOffset(hours=7)
 df_temp['Humidity'] = df_temp['Humidity']/100.0
 humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
-    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%d/-%y", tickCount="day", title=None)),
+    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%-y", tickCount="day", title=None)),
     y=alt.Y('Humidity:Q', title= "% Humidity", axis=alt.Axis(format='%')),
     color = alt.value('green'),
     tooltip=[
