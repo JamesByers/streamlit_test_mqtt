@@ -161,7 +161,7 @@ styler = df4.style
 styler = styler.set_properties(**{'text-align': 'right'}) \
                .set_table_styles(
                    [{'selector': 'th',
-                     'props': [('text-align': 'right'}]}]
+                     'props': [('text-align', 'right')]}]
                )
 
 # Display the styled DataFrame
