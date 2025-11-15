@@ -92,7 +92,7 @@ df_day.sort_index()
 
 # Chart Max/Min by day
 df_day_index = df_day.reset_index()
-df_day_index['Date'] = df_day_index['Date'] + pd.DateOffset(days=1) # This correction was needed for correct tooltip date but not clear why.
+df_day_index['Date'] = df_day_index['Date'] # + pd.DateOffset(days=1) # This correction was needed for correct tooltip date but not clear why.
 chart2 = alt.Chart(df_day_index, title= "Temperature Max/Min").mark_line().transform_fold(
     fold=['Max temp','Min temp'], 
     as_=['variable', 'value']
@@ -111,7 +111,7 @@ st.altair_chart(chart2, use_container_width=True)
 
 #Chart humidity over time
 df_temp= df[['Datetime PT','Humidity']]
-df_temp['Datetime PT'] = df_temp['Datetime PT'] + pd.DateOffset(hours=7)
+df_temp['Datetime PT'] = df_temp['Datetime PT'] # + pd.DateOffset(hours=7)
 df_temp['Humidity'] = df_temp['Humidity']/100.0
 humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/-%y", tickCount="day", title=None)),
@@ -128,7 +128,7 @@ st.altair_chart(humidity_chart, use_container_width=True)
 
 #Chart of pressure over time
 df_temp= df[['Datetime PT','Pressure']]
-df_temp['Datetime PT'] = df_temp['Datetime PT'] + pd.DateOffset(hours=7)
+df_temp['Datetime PT'] = df_temp['Datetime PT'] # + pd.DateOffset(hours=7)
 df_temp['Barametric Pressure'] = df_temp['Pressure']
 humidity_chart = alt.Chart(df_temp, title= "Barametric Pressure").mark_line().encode(
     x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/-%y", tickCount="day", title=None)),
