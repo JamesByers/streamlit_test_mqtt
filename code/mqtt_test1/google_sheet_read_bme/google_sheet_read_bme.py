@@ -71,7 +71,8 @@ temperature_chart = alt.Chart(df2, title= "Temperature").transform_calculate(
 #    color = ('hot:N'), #, alt.Legend=None},
     color = ('hot_flag'),
     tooltip=[
-       alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %:%-M %p", title="Time PT"),
+       alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %-I:%-M %p", title="Time PT"),
+       # alt.Tooltip('Datetime PT', format="%-m/%-d/%-y %:%-M %p", title="Time PT"),
        alt.Tooltip('BME Temp (F)', format=".1f", title="Temp (F)"),
     ],
  ).configure_range(
