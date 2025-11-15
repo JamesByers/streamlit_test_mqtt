@@ -152,6 +152,21 @@ df4.index += pd.Timedelta('0 hours')
 df4.index.rename('Date', inplace= True)
 df4.rename(columns={'BME Temp (F)':'Temp (F)'}, inplace=True)
 #st.write(df4.round(1))
+# Define CSS styles for table headers and data cells
+# 'th' targets table headers (column headers)
+# 'td' targets table data cells (values)
+styles = [
+    dict(selector="th", props=[("text-align", "right")]),
+    dict(selector="td", props=[("text-align", "right")])
+]
+
+# Apply the styles using Pandas Styler
+styled_df = df4.style.set_table_styles(styles)
+
+# Display the styled DataFrame in Streamlit
+st.dataframe(styled_df)
+
+
 # Create a Styler object
 styler = df4.style
 # Apply CSS to right-align all columns (or specific ones)
