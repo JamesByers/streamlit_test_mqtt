@@ -158,11 +158,11 @@ styler = df4.style
 # Apply CSS to right-align all columns (or specific ones)
 # This targets the 'td' (table data) elements
 # You can also target specific columns by name or index
-styler = styler.set_properties(**{'text-align': 'right'})
+styler = styler.set_properties(**{'text-align': 'right','format': '.2f'})
 
 # Display the styled DataFrame using st.write()
 # Streamlit will automatically use st.dataframe() and apply the Styler
-st.write(styler.round(1))
+st.write(styler)
 
 # Write table of readings
 df5 = df
