@@ -114,7 +114,7 @@ df_temp= df[['Datetime PT','Humidity']]
 df_temp['Datetime PT'] = df_temp['Datetime PT'] # + pd.DateOffset(hours=7)
 df_temp['Humidity'] = df_temp['Humidity']/100.0
 humidity_chart = alt.Chart(df_temp, title= "Humidity").mark_line().encode(
-    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/-%y", tickCount="day", title=None)),
+    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%d/-%y", tickCount="day", title=None)),
     y=alt.Y('Humidity:Q', title= "% Humidity", axis=alt.Axis(format='%')),
     color = alt.value('green'),
     tooltip=[
@@ -131,7 +131,7 @@ df_temp= df[['Datetime PT','Pressure']]
 df_temp['Datetime PT'] = df_temp['Datetime PT'] # + pd.DateOffset(hours=7)
 df_temp['Barametric Pressure'] = df_temp['Pressure']
 humidity_chart = alt.Chart(df_temp, title= "Barametric Pressure").mark_line().encode(
-    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/-%y", tickCount="day", title=None)),
+    x=alt.X('Datetime PT:T', axis=alt.Axis(format="%-m/%-d/%y", tickCount="day", title=None)),
     y=alt.Y('Barametric Pressure:Q', title= "Pressure", scale=alt.Scale(domain=[29.2, 30.2])),
     color = alt.value('#D2691E'),
     tooltip=[
