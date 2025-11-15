@@ -162,7 +162,7 @@ styler = styler.set_properties(**{'text-align': 'right','format': '.2f'})
 
 # Display the styled DataFrame using st.write()
 # Streamlit will automatically use st.dataframe() and apply the Styler
-st.write(styler)
+st.write(styler.format("{:.2f}"))
 
 # Write table of readings
 df5 = df
