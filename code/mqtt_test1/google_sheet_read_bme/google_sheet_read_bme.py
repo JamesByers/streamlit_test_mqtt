@@ -164,7 +164,7 @@ styles = [
 styled_df = df4.style.set_table_styles(styles)
 
 # Display the styled DataFrame in Streamlit
-st.dataframe(styled_df)
+st.write(styled_df)
 
 
 # Create a Styler object
