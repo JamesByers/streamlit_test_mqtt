@@ -164,12 +164,6 @@ styler = styler.set_properties(**{'text-align': 'right'}) \
                      'props': [('text-align', 'right')]}]
                )
 
-# Add a right-aligned header above the table
-st.markdown(
-    "<h2 style='text-align: right;'>Daily Max/Min Values</h2>",
-    unsafe_allow_html=True
-)
-
 # Display the styled DataFrame
 st.write(styler.format("{:.1f}"))
 
